@@ -3,155 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Examen Tipo Test</title>
-    <link href="css_estilo_bootstrap.css" rel="stylesheet" type="text/css">
-    <!--<style>
-        
-    </style>-->
+    <title>Tests de repaso - 2do examen DAW</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+        }
+        h1 { font-size: 1.6em; color: #222; margin-bottom: 6px; text-align: center; }
+        .subtitulo { font-size: 0.85em; color: #888; margin-bottom: 30px; text-align: center; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            width: 100%;
+            max-width: 900px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.15s, box-shadow 0.15s;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.13); }
+        .card .icono { font-size: 2em; margin-bottom: 4px; }
+        .card .nombre { font-size: 1.1em; font-weight: bold; color: #222; }
+        .card .detalle { font-size: 0.82em; color: #888; }
+        .card .badge {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.78em;
+            font-weight: bold;
+            color: white;
+            width: fit-content;
+        }
+        .card.digitalizacion { border-top: 4px solid #6c63ff; }
+        .card.digitalizacion .badge { background: #6c63ff; }
+        .card.nube { border-top: 4px solid #2196f3; }
+        .card.nube .badge { background: #2196f3; }
+        .card.sostenibilidad { border-top: 4px solid #4caf50; }
+        .card.sostenibilidad .badge { background: #4caf50; }
+        .card.des { border-top: 4px solid #ff7043; }
+        .card.des .badge { background: #ff7043; }
+    </style>
 </head>
 <body>
-<script src="./test_de_ejemplo_3_preguntas.js"></script><!-- Cuidado con la ruta -->
-    <h1>Examen Tipo Test</h1>
 
-    <p><span style="font-size:0.8em;color:grey;">(Recarga para generar otro test aleatorio)</p>
+    <h1>📝 Tests de repaso</h1>
+    <p class="subtitulo">2do examen DAW</p>
 
-    <div id="cuestionario"></div>
-    
-    <button id="btnConfirmar">Confirmar respuestas</button>
-	
-    <div id="resultado"></div>
+    <div class="grid">
 
-<script>
+        <a class="card digitalizacion" href="./Digitalizacion.html">
+            <div class="icono">💻</div>
+            <div class="nombre">Digitalización</div>
+            <div class="detalle">2ª Evaluación · Datos, Big Data, IA, Power BI, Ciberseguridad</div>
+            <span class="badge">40 preguntas</span>
+        </a>
 
-        // Para que funcione en Android hay que copiar y pegar aquí el Array de objetos con las preguntas y respuestas
+        <a class="card nube" href="./Nube.html">
+            <div class="icono">☁️</div>
+            <div class="nombre">La Nube</div>
+            <div class="detalle">2ª Evaluación · Cloud Computing, servicios Google Cloud, infrasestructura, jerarquía de recursos, VPC</div>
+            <span class="badge">103 preguntas</span>
+        </a>
 
+        <a class="card sostenibilidad" href="./Sostenibilidad.html">
+            <div class="icono">🌱</div>
+            <div class="nombre">Sostenibilidad</div>
+            <div class="detalle">2ª Evaluación · Sostenibilidad y tecnología</div>
+            <span class="badge">30 preguntas</span>
+        </a>
 
+        <a class="card des" href="./Servidor.html">
+            <div class="icono">🖥️</div>
+            <div class="nombre">Desarrollo Entorno Servidor</div>
+            <div class="detalle">Temas 5–8 · ADO.NET, MVC, ORM, Servicios Web</div>
+            <span class="badge">58 preguntas</span>
+        </a>
 
-</script>
+    </div>
 
-
-<script>
-    // Función para crear un array con las preguntas reordenadas aleatoriamente
-
-    // 1. Crear array del 1 al 20
-    let numeros = Array.from({ length: preguntas_en_crudo.length }, (_, i) => i + 1);
-
-    // 2. Mezclar (Fisher-Yates shuffle)
-    for (let i = numeros.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
-    }
-
-    // Se rellena el array preguntas con el orden aleatorio
-    
-    const preguntas = numeros.map((una_pregunta) => preguntas_en_crudo[una_pregunta-1]);
-    console.log(preguntas)
-
-
-</script>
-
-
-
-<script>  // Funciones
-
-        // Función para generar el HTML del cuestionario
-        function generarCuestionario() {
-            const contenedor = document.getElementById('cuestionario');
-            let html = '<form id="formCuestionario">';
-            
-            preguntas.forEach((pregunta, indexPregunta) => {
-                html += `
-                    <div class="pregunta" id="pregunta-${indexPregunta}">
-                        <h3>${indexPregunta + 1}. ${pregunta.pregunta}</h3>
-                `;
-                
-                pregunta.respuestas.forEach((respuesta, indexRespuesta) => {
-                    html += `
-                        <div class="respuesta" id="resp-${indexPregunta}-${indexRespuesta}">
-                            <input type="radio" 
-                                   name="pregunta_${indexPregunta}" 
-                                   value="${indexRespuesta}" 
-                                   id="op-${indexPregunta}-${indexRespuesta}">
-                            <label for="op-${indexPregunta}-${indexRespuesta}">${respuesta}</label>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-            });
-            
-            html += '</form>';
-            contenedor.innerHTML = html;
-        }
-
-        // Función para eliminar clases de color de todas las respuestas
-        function limpiarColores() {
-            const respuestas = document.querySelectorAll('.respuesta');
-            respuestas.forEach(respuesta => {
-                respuesta.classList.remove('correcta', 'incorrecta');
-            });
-        }
-
-        // Función para verificar respuestas
-        function verificarRespuestas() {
-            limpiarColores();
-            
-            let aciertos = 0;
-            const form = document.getElementById('formCuestionario');
-            
-            preguntas.forEach((pregunta, indexPregunta) => {
-                // Obtener la respuesta seleccionada para esta pregunta
-                const radios = form.querySelectorAll(`input[name="pregunta_${indexPregunta}"]`);
-                let respuestaSeleccionada = null;
-                
-                radios.forEach(radio => {
-                    if (radio.checked) {
-                        respuestaSeleccionada = radio.value;
-                    }
-                });
-                
-                // Determinar colores y contar aciertos
-                if (respuestaSeleccionada !== null) {
-                    // Marcar la respuesta correcta
-                    const respuestaCorrectaDiv = document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`);
-                    respuestaCorrectaDiv.classList.add('correcta');
-                    
-                    // Si el usuario seleccionó una respuesta incorrecta, marcarla en rojo
-                    if (parseInt(respuestaSeleccionada) !== pregunta.idCorrecta) {
-                        const respuestaIncorrectaDiv = document.getElementById(`resp-${indexPregunta}-${respuestaSeleccionada}`);
-                        respuestaIncorrectaDiv.classList.add('incorrecta');
-                    } else {
-                        // Si acertó, incrementar contador
-                        aciertos++;
-                    }
-                } else {
-                    // Si no respondió, solo mostrar la correcta en verde
-                    const respuestaCorrectaDiv = document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`);
-                    respuestaCorrectaDiv.classList.add('correcta');
-                }
-            });
-            
-            // Mostrar resultado
-            const resultadoDiv = document.getElementById('resultado');
-            resultadoDiv.innerHTML = `Has acertado ${aciertos} de ${preguntas.length} preguntas.`;
-            
-            // Cambiar color del resultado según rendimiento
-            if (aciertos === preguntas.length) {
-                resultadoDiv.style.color = '#28a745';
-            } else if (aciertos >= preguntas.length / 2) {
-                resultadoDiv.style.color = '#ffc107';
-            } else {
-                resultadoDiv.style.color = '#dc3545';
-            }
-        }
-
-        // Generar el cuestionario al cargar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            generarCuestionario();
-            
-            // Agregar evento al botón confirmar
-            document.getElementById('btnConfirmar').addEventListener('click', verificarRespuestas);
-        });
-    </script>
 </body>
 </html>

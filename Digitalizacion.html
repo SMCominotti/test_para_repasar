@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Digitalización - 2ª Evaluación - 40 preguntas</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f5f5f5; }
+        .pregunta { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .pregunta h3 { margin-top: 0; color: #333; }
+        .respuesta { margin: 10px 0; padding: 8px; border-radius: 4px; transition: background-color 0.3s; }
+        .respuesta label { margin-left: 8px; cursor: pointer; }
+        .correcta { background-color: #d4edda; border: 1px solid #c3e6cb; }
+        .incorrecta { background-color: #f8d7da; border: 1px solid #f5c6cb; }
+        #btnConfirmar { background-color: #007bff; color: white; border: none; padding: 12px 30px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 20px 0; display: block; }
+        #btnConfirmar:hover { background-color: #0056b3; }
+        #resultado { font-size: 18px; font-weight: bold; margin-top: 20px; padding: 15px; background-color: white; border-radius: 5px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Test - Digitalización - 2ª Evaluación - 40 preguntas</h1>
+    <p><span style="font-size:0.8em;color:grey;">(Recarga para generar otro test aleatorio)</span></p>
+    <div id="cuestionario"></div>
+    <button id="btnConfirmar">Confirmar respuestas</button>
+    <div id="resultado"></div>
+
+<script>
+const preguntas_en_crudo = [
+
+    // ── UNIDAD 5: DATOS ─────────────────────────────────────────────────────
+    {
+        pregunta: "¿Cuál es la principal diferencia entre un dato y una información?",
+        idCorrecta: 1,
+        respuestas: [
+            "No hay diferencia, ambos términos son sinónimos.",
+            "El dato es crudo y sin contexto; la información es el dato procesado y con significado.",
+            "El dato siempre es numérico y la información siempre es textual."
+        ]
+    },
+    {
+        pregunta: "¿Cuál de las siguientes NO es una etapa típica del ciclo de vida del dato?",
+        idCorrecta: 0,
+        respuestas: ["Desfragmentación", "Visualización", "Recolección"]
+    },
+    {
+        pregunta: "¿Cuál de las siguientes NO es una de las 'Vs' principales del Big Data?",
+        idCorrecta: 2,
+        respuestas: ["Volumen", "Velocidad", "Veracidad"]
+    },
+    {
+        pregunta: "¿Qué tipo de datos se caracteriza por no tener un formato fijo y ser difíciles de procesar con métodos tradicionales?",
+        idCorrecta: 2,
+        respuestas: ["Datos semiestructurados", "Datos estructurados", "Datos no estructurados"]
+    },
+    {
+        pregunta: "¿Cuál es el primer paso en un proyecto típico de Ciencia de Datos?",
+        idCorrecta: 2,
+        respuestas: ["Modelado", "Recolección de datos", "Definir el objetivo de negocio"]
+    },
+    {
+        pregunta: "¿Cómo se relacionan el Big Data, el Machine Learning y la Inteligencia Artificial?",
+        idCorrecta: 2,
+        respuestas: [
+            "El Machine Learning genera Big Data para la Inteligencia Artificial.",
+            "La Inteligencia Artificial crea Machine Learning y Big Data.",
+            "El Big Data es la materia prima, el Machine Learning procesa los datos y la IA utiliza los resultados."
+        ]
+    },
+    {
+        pregunta: "¿Cuál NO es una ventaja principal del almacenamiento en la nube?",
+        idCorrecta: 2,
+        respuestas: ["Escalabilidad", "Acceso remoto", "Dependencia total de hardware local"]
+    },
+    {
+        pregunta: "¿Cuál de los siguientes NO es un beneficio del Cloud Computing?",
+        idCorrecta: 1,
+        respuestas: ["Escalabilidad y flexibilidad", "Mayor inversión inicial en infraestructura", "Ahorro de costes"]
+    },
+    {
+        pregunta: "¿Cuál es el principal objetivo del Reglamento General de Protección de Datos (RGPD)?",
+        idCorrecta: 0,
+        respuestas: [
+            "Proteger la privacidad y los derechos de los individuos sobre sus datos personales",
+            "Obligar a las empresas a compartir datos con el gobierno",
+            "Facilitar el libre comercio de datos sin restricciones"
+        ]
+    },
+    {
+        pregunta: "¿Cuál es una ventaja de convertir un rango de datos en una 'Tabla de Excel'?",
+        idCorrecta: 2,
+        respuestas: [
+            "Hace que los datos sean invisibles",
+            "Elimina la posibilidad de usar fórmulas",
+            "Facilita la gestión y el análisis de datos, incluyendo la actualización automática en tablas dinámicas"
+        ]
+    },
+    {
+        pregunta: "¿Para qué sirve una tabla dinámica en Excel?",
+        idCorrecta: 1,
+        respuestas: [
+            "Eliminar datos duplicados automáticamente",
+            "Resumir y analizar datos de forma flexible",
+            "Convertir texto en imágenes"
+        ]
+    },
+    {
+        pregunta: "¿Qué ventaja principal ofrecen los gráficos dinámicos en Excel?",
+        idCorrecta: 2,
+        respuestas: [
+            "No permiten personalización",
+            "Solo pueden mostrar datos estáticos",
+            "Se actualizan automáticamente al cambiar la tabla dinámica subyacente"
+        ]
+    },
+    {
+        pregunta: "¿Cuál es la función principal de Power Query en Excel?",
+        idCorrecta: 0,
+        respuestas: [
+            "Conectar, transformar y limpiar datos de diversas fuentes",
+            "Enviar correos electrónicos masivos",
+            "Crear presentaciones de diapositivas"
+        ]
+    },
+    {
+        pregunta: "¿Cuál es la principal diferencia entre Power BI Desktop y Power BI Service?",
+        idCorrecta: 1,
+        respuestas: [
+            "Desktop permite colaboración en tiempo real",
+            "Desktop es para crear informes; Service es para publicarlos y compartirlos en la nube",
+            "Service solo funciona sin conexión a internet"
+        ]
+    },
+    {
+        pregunta: "¿Qué tipo de visualización es ideal para mostrar tendencias a lo largo del tiempo en Power BI?",
+        idCorrecta: 2,
+        respuestas: ["Gráfico circular", "Tabla", "Gráfico de líneas"]
+    },
+    {
+        pregunta: "¿Para qué sirven los segmentadores (slicers) en Power BI?",
+        idCorrecta: 2,
+        respuestas: [
+            "Crean nuevas tablas automáticamente",
+            "Sirven para enviar informes por correo",
+            "Permiten filtrar datos de manera interactiva en los informes"
+        ]
+    },
+    {
+        pregunta: "¿Qué hace la IA en plataformas como Netflix o Amazon para personalizar recomendaciones?",
+        idCorrecta: 1,
+        respuestas: [
+            "Elige recomendaciones al azar",
+            "Analiza los datos de comportamiento del usuario y aprende patrones de preferencia",
+            "Solo muestra los productos más caros"
+        ]
+    },
+    {
+        pregunta: "¿Cómo ayuda la IA en la detección de fraude en el sector financiero?",
+        idCorrecta: 1,
+        respuestas: [
+            "Aprueba todas las transacciones automáticamente",
+            "Detecta patrones inusuales en grandes volúmenes de transacciones",
+            "Solo revisa transacciones manualmente"
+        ]
+    },
+    {
+        pregunta: "¿Cuál de los siguientes es un principio fundamental del RGPD?",
+        idCorrecta: 1,
+        respuestas: [
+            "Recolección de todos los datos posibles sin restricción",
+            "Minimización de datos",
+            "Almacenamiento indefinido de datos"
+        ]
+    },
+    {
+        pregunta: "¿Por qué es importante la calidad (veracidad) de los datos en la toma de decisiones empresariales?",
+        idCorrecta: 2,
+        respuestas: [
+            "Porque los datos de baja calidad son más baratos",
+            "Porque la veracidad solo importa en el sector público",
+            "Porque decisiones basadas en datos incorrectos pueden ser erróneas o perjudiciales"
+        ]
+    },
+
+    // ── UNIDAD 5: SISTEMAS DE SEGURIDAD Y CIBERSEGURIDAD ────────────────────
+    {
+        pregunta: "¿Cuál es la principal diferencia entre seguridad y privacidad de la información?",
+        idCorrecta: 1,
+        respuestas: [
+            "La privacidad solo aplica a empresas, la seguridad a usuarios.",
+            "La seguridad protege el acceso, la privacidad regula el uso.",
+            "Ambas significan lo mismo en informática."
+        ]
+    },
+    {
+        pregunta: "¿Cuál de los siguientes NO es un pilar de la tríada CIA en seguridad de la información?",
+        idCorrecta: 2,
+        respuestas: ["Confidencialidad", "Disponibilidad", "Veracidad"]
+    },
+    {
+        pregunta: "¿Qué representa la analogía de la casa en el contexto de seguridad y privacidad?",
+        idCorrecta: 2,
+        respuestas: [
+            "La casa es solo la privacidad.",
+            "La casa es el internet y la privacidad es la puerta.",
+            "La casa son los datos; la seguridad son las cerraduras y la privacidad las reglas internas."
+        ]
+    },
+    {
+        pregunta: "¿Cuál es el activo más valioso en la economía digital moderna según la unidad?",
+        idCorrecta: 0,
+        respuestas: ["La información", "El software instalado", "El hardware de la empresa"]
+    },
+    {
+        pregunta: "¿Cuál es una consecuencia directa de una mala gestión de la seguridad de la información?",
+        idCorrecta: 1,
+        respuestas: [
+            "Aumento de clientes",
+            "Daño irreparable a la reputación",
+            "Mejor reputación empresarial"
+        ]
+    },
+    {
+        pregunta: "¿Cuál es la mejor práctica para crear una contraseña segura?",
+        idCorrecta: 0,
+        respuestas: [
+            "Usar una frase larga y personal",
+            "Reutilizar la misma contraseña en varios servicios",
+            "Utilizar solo números"
+        ]
+    },
+    {
+        pregunta: "¿Qué es la autenticación multifactor (MFA)?",
+        idCorrecta: 0,
+        respuestas: [
+            "Requiere dos o más factores para verificar la identidad",
+            "Un tipo de ataque informático",
+            "Un método para recordar contraseñas"
+        ]
+    },
+    {
+        pregunta: "¿Cuál es una desventaja del uso de SMS como segundo factor en MFA?",
+        idCorrecta: 2,
+        respuestas: [
+            "No requiere teléfono móvil",
+            "Es más rápido que otros métodos",
+            "Es vulnerable a ataques de SIM swapping"
+        ]
+    },
+    {
+        pregunta: "¿Qué característica hace que la autenticación biométrica sea segura y cómoda?",
+        idCorrecta: 0,
+        respuestas: [
+            "Se basa en rasgos únicos difíciles de falsificar",
+            "Permite compartir contraseñas",
+            "No requiere dispositivos electrónicos"
+        ]
+    },
+    {
+        pregunta: "¿Qué es el phishing?",
+        idCorrecta: 0,
+        respuestas: [
+            "Un fraude que suplanta identidades para robar datos",
+            "Un método de autenticación",
+            "Un tipo de copia de seguridad"
+        ]
+    },
+    {
+        pregunta: "¿Cuál es una señal de alerta de un correo electrónico de phishing?",
+        idCorrecta: 1,
+        respuestas: [
+            "Redacción perfecta y sin errores",
+            "Errores gramaticales y ortográficos",
+            "Remitente con dominio oficial"
+        ]
+    },
+    {
+        pregunta: "¿Qué es el ransomware?",
+        idCorrecta: 0,
+        respuestas: [
+            "Un malware que cifra archivos y pide rescate",
+            "Un tipo de firewall",
+            "Un sistema de autenticación"
+        ]
+    },
+    {
+        pregunta: "¿Qué medida es fundamental para protegerse contra el ransomware?",
+        idCorrecta: 1,
+        respuestas: [
+            "Compartir contraseñas con compañeros",
+            "Realizar copias de seguridad periódicas",
+            "Desactivar el antivirus"
+        ]
+    },
+    {
+        pregunta: "¿Cuál es la función principal de un cortafuegos (firewall)?",
+        idCorrecta: 2,
+        respuestas: [
+            "Eliminar virus internos",
+            "Crear copias de seguridad",
+            "Bloquear accesos no autorizados y filtrar tráfico"
+        ]
+    },
+    {
+        pregunta: "¿Qué establece la regla 3-2-1 en copias de seguridad?",
+        idCorrecta: 2,
+        respuestas: [
+            "Una copia en la nube y dos en papel",
+            "Tres copias en el mismo dispositivo",
+            "Tres copias, dos tipos de soporte, una fuera de la oficina"
+        ]
+    },
+    {
+        pregunta: "¿Por qué es importante el borrado seguro de la información?",
+        idCorrecta: 1,
+        respuestas: [
+            "Para liberar espacio temporalmente",
+            "Para que los datos sean irrecuperables y cumplir la ley",
+            "Para compartir información fácilmente"
+        ]
+    },
+    {
+        pregunta: "¿Qué papel tienen los empleados en la cultura de ciberseguridad de una empresa?",
+        idCorrecta: 2,
+        respuestas: [
+            "No tienen responsabilidad",
+            "Solo la dirección debe preocuparse",
+            "Son la primera línea de defensa"
+        ]
+    },
+    {
+        pregunta: "¿Qué ventaja aporta la inteligencia artificial (IA) en ciberseguridad?",
+        idCorrecta: 2,
+        respuestas: [
+            "Elimina la necesidad de copias de seguridad",
+            "Solo detecta virus conocidos",
+            "Detecta amenazas nuevas mediante análisis de comportamiento"
+        ]
+    },
+    {
+        pregunta: "¿Qué es la autenticación adaptativa basada en IA?",
+        idCorrecta: 0,
+        respuestas: [
+            "Ajusta el nivel de seguridad según el riesgo detectado",
+            "Permite acceso sin contraseña",
+            "Solo funciona en redes sociales"
+        ]
+    },
+    {
+        pregunta: "¿Qué debe hacer un empleado si detecta un posible incidente de seguridad?",
+        idCorrecta: 1,
+        respuestas: [
+            "Ignorarlo para evitar problemas",
+            "Reportarlo sin miedo a represalias",
+            "Intentar resolverlo solo sin avisar"
+        ]
+    }
+];
+</script>
+
+<script>
+    let numeros = Array.from({ length: preguntas_en_crudo.length }, (_, i) => i + 1);
+    for (let i = numeros.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+    const preguntas = numeros.map((p) => preguntas_en_crudo[p - 1]);
+</script>
+
+<script>
+    function generarCuestionario() {
+        const contenedor = document.getElementById('cuestionario');
+        let html = '<form id="formCuestionario">';
+        preguntas.forEach((pregunta, indexPregunta) => {
+            html += `<div class="pregunta" id="pregunta-${indexPregunta}"><h3>${indexPregunta + 1}. ${pregunta.pregunta}</h3>`;
+            pregunta.respuestas.forEach((respuesta, indexRespuesta) => {
+                html += `<div class="respuesta" id="resp-${indexPregunta}-${indexRespuesta}">
+                    <input type="radio" name="pregunta_${indexPregunta}" value="${indexRespuesta}" id="op-${indexPregunta}-${indexRespuesta}">
+                    <label for="op-${indexPregunta}-${indexRespuesta}">${respuesta}</label>
+                </div>`;
+            });
+            html += '</div>';
+        });
+        html += '</form>';
+        contenedor.innerHTML = html;
+    }
+    function limpiarColores() {
+        document.querySelectorAll('.respuesta').forEach(r => r.classList.remove('correcta', 'incorrecta'));
+    }
+    function verificarRespuestas() {
+        limpiarColores();
+        let aciertos = 0;
+        const form = document.getElementById('formCuestionario');
+        preguntas.forEach((pregunta, indexPregunta) => {
+            const radios = form.querySelectorAll(`input[name="pregunta_${indexPregunta}"]`);
+            let respuestaSeleccionada = null;
+            radios.forEach(radio => { if (radio.checked) respuestaSeleccionada = radio.value; });
+            document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`).classList.add('correcta');
+            if (respuestaSeleccionada !== null) {
+                if (parseInt(respuestaSeleccionada) !== pregunta.idCorrecta) {
+                    document.getElementById(`resp-${indexPregunta}-${respuestaSeleccionada}`).classList.add('incorrecta');
+                } else { aciertos++; }
+            }
+        });
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = `Has acertado ${aciertos} de ${preguntas.length} preguntas.`;
+        resultadoDiv.style.color = aciertos === preguntas.length ? '#28a745' : aciertos >= preguntas.length / 2 ? '#ffc107' : '#dc3545';
+        resultadoDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        generarCuestionario();
+        document.getElementById('btnConfirmar').addEventListener('click', verificarRespuestas);
+    });
+</script>
+</body>
+</html>

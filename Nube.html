@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - 2º Evaluación - La Nube - 103 preguntas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .pregunta {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .pregunta h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .respuesta {
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .respuesta label {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        .correcta {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrecta {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        .acierto-texto {
+            font-weight: bold;
+        }
+        #btnConfirmar, #btnTestNuevo {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+            display: block;
+        }
+        #btnConfirmar:hover {
+            background-color: #0056b3;
+        }
+        #resultado {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!-- <script src="./test.js"></script> -->
+    <h1>Test - 2º Evaluación - La Nube - 103 preguntas</h1>
+
+    <p><span style="font-size:0.8em;color:grey;">(Recarga para generar otro test aleatorio)</p>
+    <p style="font-size:0.85em; background:#fff3cd; border:1px solid #ffc107; border-radius:6px; padding:10px; color:#856404;">
+        ⚠️ <strong>Nota:</strong> Las preguntas sobre <strong>VPC (Virtual Private Cloud)</strong> están marcadas con la etiqueta <em>"[VPC]"</em> en el test y pueden aparecer en cualquier posición al mezclar. Están incluidas por si entran en el examen.
+    </p>
+        
+    <div id="cuestionario"></div>
+    
+    <button id="btnConfirmar">Confirmar respuestas</button>
+	
+    <div id="resultado"></div>
+
+<script> // PREGUNTAS Y RESPUESTAS
+
+// Array de objetos con 62 preguntas y respuestas para rellenar
+
+// Test - 2º Evaluación - La Nube - 62 preguntas
+
+const preguntas_en_crudo = [
+            { // PREGUNTA 1
+                pregunta: "¿Qué es Cloud Computing según el NIST?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Un modelo para acceder a recursos informáticos a través de la red de forma rápida y con mínima gestión","Un sistema operativo basado en la nube","Un tipo de hardware especializado","Una red social para desarrolladores"]
+            },
+            {
+                pregunta: "¿Cuál de las siguientes NO es una característica del Cloud Computing?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Acceso bajo demanda","Recursos compartidos","Escalabilidad limitada","Control de gastos"]
+            },
+            {
+                pregunta: "¿Qué modelo de despliegue en la nube combina nubes públicas y privadas?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Nube pública","Nube privada","Nube híbrida","Nube comunitaria"]
+            },
+            {
+                pregunta: "¿Cuál de los siguientes es un modelo de servicio en la nube?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Software as a Service (SaaS)","Hardware as a Service (HaaS)","Data as a Service (DaaS)","Network as a Service (NaaS)"]
+            },
+            { // PREGUNTA 5
+                pregunta: "¿Qué componente de Google Cloud permite ejecutar máquinas virtuales escalables?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google App Engine","Google Compute Engine", "Google Cloud Functions","Google Cloud Storage"]
+            },
+            {
+                pregunta: "¿Qué servicio de Google Cloud permite ejecutar código en respuesta a eventos sin servidores?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google Kubernetes Engine","Google Cloud Functions","Google Cloud SQL","Google Cloud Spanner"]
+            },
+            {
+                pregunta: "¿Qué servicio de Google Cloud es una base de datos relacional gestionada?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Google Bigtable","Google Firestore","Google Cloud SQL","Google Cloud Storage"]
+            },
+            {
+                pregunta: "¿Qué servicio de Google Cloud es ideal para datos en tiempo real y es NoSQL?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Bigtable","Google Cloud SQL","Google App Engine","Google Cloud Functions"]
+            },
+            {
+                pregunta: "¿Qué servicio de Google Cloud permite el desarrollo de modelos de aprendizaje automático?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google AI Platform","Google Cloud CDN","Google Cloud IAM","Google Cloud Load Balancing"]
+            },
+            { // PREGUNTA 10
+                pregunta: "¿Qué servicio proporciona equilibrio de carga global en Google Cloud?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud Load Balancing","Google Cloud CDN","Google Cloud Functions","Google Cloud SQL"]
+            },
+            {
+                pregunta: "¿Qué componente de la jerarquía de recursos de Google Cloud está en la parte superior?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Organización o Unidad organizativa","Proyecto","Carpeta","Recurso"]
+            },
+            {
+                pregunta: "¿Qué elemento permite agrupar proyectos en Google Cloud?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Carpetas","Recursos","Zonas","Nodos"]
+            },
+            {
+                pregunta: "¿Qué representa una zona de disponibilidad (AZ) en Google Cloud?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Un servicio de almacenamiento","Una red de entrega de contenido","Centro de datos dentro de una región","Una base de datos relacional"]
+            },
+            {
+                pregunta: "¿Qué región de Google Cloud tiene el código US-WEST1?",
+                idCorrecta: 3, // Índice de la respuesta correcta
+                respuestas: ["Frankfurt","Madrid","Seúl","Oregón"]
+            },
+            { // PREGUNTA 15
+                pregunta: "¿Qué son los Edge Nodes en Google Cloud?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Servidores centrales de Google","Ubicaciones diseñadas para ofrecer servicios con baja latencia","Centros de datos en la nube","Bases de datos distribuidas"]
+            },
+            {
+                pregunta: "¿Qué servicio de Google Cloud permite almacenar objetos de forma escalable?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud Functions","Google Cloud SQL","Google Cloud Storage","Google Cloud Spanner"]
+            },
+            {
+                pregunta: "¿Qué servicio de Google Cloud es una base de datos documental NoSQL?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud SQL","Google Firestore","Google BigQuery","Google Cloud Storage"]
+            },
+            {
+                pregunta: "¿Qué servicio permite la mensajería en tiempo real entre componentes?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud CDN","Google Cloud Pub/Sub","Google Cloud IAM","Google Cloud Vision AI"]
+            },
+            {
+                pregunta: "¿Qué servicio proporciona control de acceso a los recursos en Google Cloud?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud IAM","Google Cloud Functions","Google Cloud SQL","Google Cloud CDN"]
+            },
+            { // PREGUNTA 20
+                pregunta: "¿Qué servicio permite el análisis de texto mediante lenguaje natural?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Natural Language API","Google Cloud Vision AI","Google Cloud Functions","Google Cloud SQL"]
+            },
+            {
+                pregunta: "¿Qué servicio permite el reconocimiento de objetos en imágenes y vídeos?",
+                idCorrecta: 3, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud Run","Google Cloud SQL","Google Cloud IAM","Google Cloud Vision AI"]
+            },
+            {
+                pregunta: "¿Qué servicio permite desplegar contenedores con Kubernetes?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Kubernetes Engine","Google App Engine","Google Cloud Functions","Google Cloud Storage"]
+            },
+            {
+                pregunta: "¿Qué servicio permite crear modelos de ML sin experiencia previa?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud CDN","Google Cloud SQL","Google Cloud AutoML","Google Cloud IAM"]
+            },
+            {
+                pregunta: "¿Qué servicio es una base de datos relacional distribuida globalmente?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud SQL","Google Cloud Spanner","Google Bigtable","Google Firestore"]
+            },
+            { // PREGUNTA 25
+                pregunta: "¿Qué componente de la infraestructura de Google Cloud está más cerca del usuario?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Zonas","Regiones","Edge Nodes","Centros de datos"]
+            },
+            {
+                pregunta: "¿Qué servicio permite entregar contenido web de forma optimizada?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud CDN","Google Cloud SQL","Google Cloud Functions","Google Cloud IAM"]
+            },
+            {
+                pregunta: "¿Qué región de Google Cloud tiene bajas emisiones de CO2?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Oregon (US-WEST1)","Frankfurt","Tokyo","Delhi"]
+            },
+            {
+                pregunta: "¿Qué servicio permite desarrollar aplicaciones sin servidor?",
+                idCorrecta: 3, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud CDN","Google Cloud SQL","Google Cloud Spanner","Google App Engine"]
+            },
+            {
+                pregunta: "¿Qué componente de la jerarquía de recursos contiene recursos como máquinas virtuales?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Carpeta","Unidad organizativa","Proyecto","Zona"]
+            },
+            { // PREGUNTA 30
+                pregunta: "¿Qué ventaja ofrece la nube respecto a la inversión inicial?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Mayor coste inicial","No requiere gran inversión inicial","Mayor complejidad técnica","Menor escalabilidad"]
+            },
+            {
+                pregunta: "¿Qué característica permite acceder a recursos sin intervención humana directa?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["On-demand Self Service","Recursos compartidos","Acceso físico","Red privada"]
+            },
+            {
+                pregunta: "¿Qué componente organiza proyectos y recursos en Google Cloud?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Zonas","Carpetas","Regiones","Nodos"]
+            },
+            {
+                pregunta: "¿Qué característica del Cloud Computing permite aumentar o reducir recursos según la demanda?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Redundancia","Seguridad","Escalabilidad","Virtualización"]
+            },
+            {
+                pregunta: "¿Cuál de los siguientes es un modelo de servicio en la nube?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["SaaS","VPN","HTTP","DNS"]
+            },
+            { // PREGUNTA 35
+                pregunta: "¿Qué modelo de despliegue en la nube es exclusivo para una sola organización?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Nube privada","Nube híbrida","Nube pública","Nube comunitaria"]
+            },
+            {
+                pregunta: "¿Qué servicio de Google Cloud permite ejecutar contenedores gestionados con Kubernetes?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google App Engine","Google Kubernetes Engine","Google Cloud Functions","Google Cloud Run"]
+            },
+            {
+                pregunta: "¿Qué componente de la jerarquía de recursos contiene directamente los recursos como máquinas virtuales?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Unidad organizativa","Proyecto","Carpeta","Zona"]
+            },
+            {
+                pregunta: "¿Qué servicio de Google Cloud permite almacenar objetos de forma escalable?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google BigQuery","Google Cloud Storage","Google Cloud SQL","Google Cloud Spanner"]
+            },
+            {
+                pregunta: "¿Qué servicio permite ejecutar código en respuesta a eventos sin necesidad de servidores?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google App Engine","Google Cloud Functions","Google Cloud SQL","Google Cloud CDN"]
+            },
+            { // PREGUNTA 40
+                pregunta: "¿Qué componente de infraestructura está más cerca del usuario final?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Zona","Región","Edge Node","Centro de datos"]
+            },
+            {
+                pregunta: "¿Qué servicio de Google Cloud proporciona una base de datos relacional completamente gestionada?",
+                idCorrecta: 3, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud Storage","Google Bigtable","Google Firestore","Google Cloud SQL"]
+            },
+            {
+                pregunta: "¿Qué servicio permite la mensajería en tiempo real entre aplicaciones?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud Pub/Sub","Google Cloud CDN","Google Cloud IAM","Google Cloud Vision AI"]
+            },
+            {
+                pregunta: "¿Qué componente organiza jerárquicamente los proyectos en Google Cloud?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Regiones","Carpetas","Zonas","Edge Nodes"]
+            },
+            {
+                pregunta: "¿Qué servicio permite crear modelos de aprendizaje automático sin experiencia previa?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud SQL","Google Cloud AutoML","Google Cloud IAM","Google Cloud CDN"]
+            },
+            { // PREGUNTA 45
+                pregunta: "¿Qué servicio proporciona balanceo de carga global?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud Storage","Google Cloud Functions","Google Cloud Load Balancing","Google Cloud SQL"]
+            },
+            {
+                pregunta: "¿Qué región tiene el código US-WEST1?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Madrid","Frankfurt","Oregón","Tokio"]
+            },
+            {
+                pregunta: "¿Qué servicio permite desarrollar aplicaciones sin gestionar servidores?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google App Engine","Google Cloud SQL","Google Cloud Spanner","Google Cloud CDN"]
+            },
+            {
+                pregunta: "¿Qué servicio permite almacenar datos en formato documental NoSQL?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Firestore","Google Cloud SQL","Google BigQuery","Google Cloud Storage"]
+            },
+            {
+                pregunta: "¿Qué servicio permite analizar texto con procesamiento de lenguaje natural?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud Vision AI","Google Natural Language API","Google Cloud Functions","Google Cloud SQL"]
+            },
+            { // PREGUNTA 50
+                pregunta: "¿Qué servicio permite reconocimiento de objetos en imágenes y vídeos?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud IAM","Google Cloud SQL","Google Cloud Vision AI","Google Cloud Run"]
+            },
+            {
+                pregunta: "¿Qué servicio ofrece una base de datos relacional distribuida globalmente?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud Spanner","Google Cloud SQL","Google Bigtable","Google Firestore"]
+            },
+            {
+                pregunta: "¿Qué componente conecta la red de Google con el resto de Internet?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Network Edge Locations","Zonas","Proyectos","Firewalls"]
+            },
+            {
+                pregunta: "¿Qué característica del Cloud permite pagar solo por lo que se usa?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Control de gastos","Redundancia","Seguridad","Latencia"]
+            },
+            {
+                pregunta: "¿Qué servicio permite distribuir contenido web de forma eficiente?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud CDN","Google Cloud SQL","Google Cloud IAM","Google Cloud Functions"]
+            },
+            { // PREGUNTA 55
+                pregunta: "¿Qué servicio permite gestionar el acceso a los recursos?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud IAM","Google Cloud Functions","Google Cloud SQL","Google Cloud CDN"]
+            },
+            {
+                pregunta: "¿Qué servicio permite ejecutar contenedores sin gestionar servidores?",
+                idCorrecta: 3, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud Spanner","Google App Engine","Google Cloud SQL","Google Cloud Run"]
+            },
+            {
+                pregunta: "¿Qué servicio ofrece una base de datos NoSQL de alto rendimiento?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Google Firestore","Google Cloud SQL","Google Bigtable","Google Cloud Storage"]
+            },
+            {
+                pregunta: "¿Qué componente agrupa proyectos dentro de una organización?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Carpeta","Zona","Región","Nodo"]
+            },
+            {
+                pregunta: "¿Qué servicio fue el primero ofrecido por Google Cloud?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Google Cloud SQL","Google Compute Engine","Google App Engine","Google Cloud Storage"]
+            },
+            { // PREGUNTA 60
+                pregunta: "¿Qué componente representa una ubicación geográfica con centros de datos?",
+                idCorrecta: 3, // Índice de la respuesta correcta
+                respuestas: ["Proyecto","Zona","Nodo","Región"]
+            },
+            {
+                pregunta: "¿Cuántas zonas de disponibilidad tiene Google Cloud actualmente (según el documento)?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["200","39","118","50"]
+            },
+            {
+                pregunta: "¿Qué servicio permite almacenar y consultar grandes volúmenes de datos en tiempo real?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Google Bigtable","Google Cloud SQL","Google Cloud Functions","Google Cloud CDN"]
+            },
+
+			// ── NUEVAS PREGUNTAS: Aplicaciones web, hosting, DNS, HTTP, protocolos ──
+
+			{ // PREGUNTA 63
+				pregunta: "¿Qué tipo de aplicación NO necesita conexión a Internet para funcionar?",
+				idCorrecta: 0,
+				respuestas: ["Aplicación sin conexión a Internet", "Aplicación P2P", "Aplicación cliente-servidor", "Aplicación web"]
+			},
+			{
+				pregunta: "¿Cómo se llama el modelo de red donde todos los nodos tienen el mismo rango y comparten información entre sí?",
+				idCorrecta: 2,
+				respuestas: ["Cliente-servidor", "Cloud Computing", "P2P (peer-to-peer)", "SaaS"]
+			},
+			{
+				pregunta: "En una aplicación web, ¿qué parte se ejecuta en el navegador del usuario?",
+				idCorrecta: 1,
+				respuestas: ["Back-end", "Front-end", "Base de datos", "Servidor"]
+			},
+			{
+				pregunta: "¿Cuál de las siguientes tecnologías pertenece al front-end?",
+				idCorrecta: 0,
+				respuestas: ["HTML, CSS, JavaScript", "Node.js, PHP, Python", "MySQL, PostgreSQL", "Docker, Kubernetes"]
+			},
+			{ // PREGUNTA 67
+				pregunta: "¿Qué es el back-end de una aplicación web?",
+				idCorrecta: 2,
+				respuestas: ["La interfaz visual que ve el usuario", "El navegador web", "El componente que gestiona la lógica de negocio y acceso a datos en el servidor", "El protocolo de comunicación"]
+			},
+			{
+				pregunta: "¿Qué formato se usa habitualmente para intercambiar datos entre cliente y servidor en una API REST?",
+				idCorrecta: 1,
+				respuestas: ["HTML", "JSON", "CSS", "XML obligatoriamente"]
+			},
+			{
+				pregunta: "En la arquitectura de dos niveles (2-tier), ¿dónde se ejecutan el servidor web y la base de datos?",
+				idCorrecta: 0,
+				respuestas: ["En la misma máquina", "En máquinas separadas", "En la nube siempre", "En el navegador del cliente"]
+			},
+			{
+				pregunta: "¿Qué ventaja principal tiene la arquitectura de tres niveles (3-tier) respecto a la de dos niveles?",
+				idCorrecta: 3,
+				respuestas: ["Es más barata siempre", "Requiere menos hardware", "Solo funciona en local", "Mejora el rendimiento, la seguridad y la escalabilidad al separar el servidor web de la base de datos"]
+			},
+			{ // PREGUNTA 71
+				pregunta: "¿Qué arquitectura permite que cada funcionalidad (pagos, búsqueda...) funcione como un servicio independiente?",
+				idCorrecta: 2,
+				respuestas: ["Arquitectura 2-tier", "Arquitectura 3-tier", "Arquitectura de microservicios", "Arquitectura monolítica"]
+			},
+			{
+				pregunta: "¿Qué es el hosting?",
+				idCorrecta: 1,
+				respuestas: ["Un protocolo de comunicación", "El servicio que permite almacenar y servir los archivos de una aplicación web desde un servidor conectado a Internet", "Un tipo de base de datos", "Un lenguaje de programación"]
+			},
+			{
+				pregunta: "¿Cuál de las siguientes es una plataforma moderna de despliegue en la nube?",
+				idCorrecta: 3,
+				respuestas: ["Microsoft Word", "Apache OpenOffice", "LibreOffice", "Vercel / Netlify / AWS"]
+			},
+			{
+				pregunta: "¿Por qué se usan nombres de dominio en lugar de direcciones IP para acceder a sitios web?",
+				idCorrecta: 0,
+				respuestas: ["Porque son más fáciles de recordar y comprender", "Porque las IPs no funcionan en Internet", "Porque las IPs son ilegales", "Porque los dominios son más rápidos"]
+			},
+			{ // PREGUNTA 75
+				pregunta: "¿Qué organización autoriza a las empresas para gestionar el registro de nombres de dominio?",
+				idCorrecta: 2,
+				respuestas: ["Google", "Microsoft", "ICANN", "UNESCO"]
+			},
+			{
+				pregunta: "¿Qué extensión de dominio se asocia habitualmente a organizaciones sin ánimo de lucro?",
+				idCorrecta: 1,
+				respuestas: [".com", ".org", ".es", ".net"]
+			},
+			{
+				pregunta: "¿Qué parte de una URL identifica el servidor al que se desea acceder?",
+				idCorrecta: 0,
+				respuestas: ["El nombre de dominio", "El protocolo", "El subdominio", "El puerto"]
+			},
+			{
+				pregunta: "En la URL 'https://www.ejemplo.es', ¿qué es 'www'?",
+				idCorrecta: 3,
+				respuestas: ["El protocolo", "El dominio principal", "La extensión", "El subdominio"]
+			},
+			{ // PREGUNTA 79
+				pregunta: "¿Qué protocolo se encarga de dividir la información en paquetes y asegurar su entrega completa y en orden?",
+				idCorrecta: 1,
+				respuestas: ["IP", "TCP", "HTTP", "DNS"]
+			},
+			{
+				pregunta: "¿Qué protocolo identifica los dispositivos mediante direcciones IP y dirige los paquetes entre origen y destino?",
+				idCorrecta: 2,
+				respuestas: ["TCP", "HTTP", "IP", "SMTP"]
+			},
+			{
+				pregunta: "¿Qué protocolo se utiliza para enviar correos electrónicos?",
+				idCorrecta: 0,
+				respuestas: ["SMTP", "POP3", "IMAP", "FTP"]
+			},
+			{
+				pregunta: "¿Qué protocolo se utiliza para transferir archivos entre cliente y servidor?",
+				idCorrecta: 3,
+				respuestas: ["SMTP", "IMAP", "HTTP", "FTP / SFTP"]
+			},
+			{ // PREGUNTA 83
+				pregunta: "¿Qué diferencia principal existe entre HTTP y HTTPS?",
+				idCorrecta: 1,
+				respuestas: ["HTTP es más moderno", "HTTPS añade cifrado TLS que protege los datos en tránsito", "HTTPS es más lento siempre", "No hay diferencia funcional"]
+			},
+			{
+				pregunta: "¿Qué capa de cifrado utiliza HTTPS para proteger las comunicaciones?",
+				idCorrecta: 2,
+				respuestas: ["SSH", "VPN", "TLS (antes SSL)", "IPSec"]
+			},
+			{
+				pregunta: "¿Qué código de estado HTTP indica que un recurso no ha sido encontrado?",
+				idCorrecta: 0,
+				respuestas: ["404 Not Found", "200 OK", "500 Internal Server Error", "301 Moved Permanently"]
+			},
+			{
+				pregunta: "¿Qué código de estado HTTP indica que la petición fue exitosa?",
+				idCorrecta: 1,
+				respuestas: ["404", "200 OK", "503", "403"]
+			},
+			{ // PREGUNTA 87
+				pregunta: "¿Qué significa un código de estado HTTP en el rango 5xx?",
+				idCorrecta: 3,
+				respuestas: ["Petición exitosa", "Redirección", "Error del cliente", "Error del servidor"]
+			},
+			{
+				pregunta: "¿Qué herramienta de Google Chrome permite analizar el tráfico HTTP entre el navegador y un servidor?",
+				idCorrecta: 2,
+				respuestas: ["Google Analytics", "Chrome Extensions", "Herramientas para desarrolladores, pestaña Network", "Google Search Console"]
+			},
+			{
+				pregunta: "¿Qué sistema traduce nombres de dominio a direcciones IP?",
+				idCorrecta: 0,
+				respuestas: ["DNS (Domain Name System)", "DHCP", "FTP", "HTTP"]
+			},
+			{
+				pregunta: "¿Cómo se llama el proceso por el que el DNS traduce un nombre de dominio a una IP?",
+				idCorrecta: 1,
+				respuestas: ["Encriptación DNS", "Resolución DNS", "Registro DNS", "Redirección DNS"]
+			},
+			{ // PREGUNTA 91
+				pregunta: "¿Por qué se dice que la base de datos del DNS es 'distribuida'?",
+				idCorrecta: 2,
+				respuestas: ["Porque solo existe un servidor DNS en el mundo", "Porque está almacenada en un único servidor central muy potente", "Porque la información está repartida entre miles de servidores en todo el mundo", "Porque solo funciona en redes privadas"]
+			},
+			{
+				pregunta: "¿Qué puerto usa por defecto una conexión HTTP?",
+				idCorrecta: 0,
+				respuestas: ["80", "443", "22", "25"]
+			},
+			{
+				pregunta: "¿Qué puerto usa por defecto una conexión HTTPS?",
+				idCorrecta: 1,
+				respuestas: ["80", "443", "22", "3306"]
+			},
+
+			// ── VPC - VIRTUAL PRIVATE CLOUD ──
+			// (Estas preguntas pueden entrar o no según el temario de examen)
+
+			{ // PREGUNTA 94
+				pregunta: "[VPC] ¿Qué es una VPC (Virtual Private Cloud)?",
+				idCorrecta: 0,
+				respuestas: ["Un entorno de red virtual aislado para crear y gestionar recursos en la nube de forma segura", "Un tipo de máquina virtual", "Un servicio de base de datos NoSQL", "Un protocolo de cifrado"]
+			},
+			{
+				pregunta: "[VPC] ¿A qué nivel geográfico es una VPC en Google Cloud?",
+				idCorrecta: 2,
+				respuestas: ["Local, solo en una zona", "Regional, solo en una región", "Global, a través de todas las regiones y zonas", "Continental, solo en un continente"]
+			},
+			{
+				pregunta: "[VPC] ¿Qué permite hacer una VPC respecto a las direcciones IP?",
+				idCorrecta: 1,
+				respuestas: ["Solo usar IPs públicas asignadas por Google", "Definir tus propias direcciones IP privadas con topología de red personalizada", "Compartir IPs con otras organizaciones", "Usar únicamente IPv6"]
+			},
+			{
+				pregunta: "[VPC] ¿Cuál de los siguientes rangos de direcciones privadas se usa en una VPC?",
+				idCorrecta: 0,
+				respuestas: ["10.0.0.0/8", "8.8.8.0/24", "172.30.255.0/8", "200.100.0.0/16"]
+			},
+			{ // PREGUNTA 98
+				pregunta: "[VPC] ¿Cómo se llaman las divisiones dentro de una VPC que facilitan el aislamiento de recursos?",
+				idCorrecta: 3,
+				respuestas: ["Regiones", "Zonas", "Proyectos", "Subredes (subnets)"]
+			},
+			{
+				pregunta: "[VPC] ¿Qué se puede definir en una VPC para controlar el tráfico entre subredes?",
+				idCorrecta: 1,
+				respuestas: ["Certificados SSL", "Reglas de firewall", "Nombres de dominio", "Registros DNS"]
+			},
+			{
+				pregunta: "[VPC] ¿Qué ocurre automáticamente cuando se crea un nuevo proyecto en Google Cloud?",
+				idCorrecta: 2,
+				respuestas: ["Se crean 10 subredes en una región", "Se crea una VPC sin subredes", "Se crea una VPC predeterminada con una subred en cada región", "Se crea una VPC privada sin acceso externo"]
+			},
+			{
+				pregunta: "[VPC] ¿Qué son los bloques CIDR en el contexto de una VPC?",
+				idCorrecta: 0,
+				respuestas: ["Conjuntos de direcciones IP definidos con una nomenclatura de red y máscara", "Tipos de máquinas virtuales", "Reglas de firewall predefinidas", "Zonas de disponibilidad"]
+			},
+			{ // PREGUNTA 102
+				pregunta: "[VPC] En una VPC, ¿qué definen las rutas?",
+				idCorrecta: 1,
+				respuestas: ["Las reglas de seguridad del firewall", "Las rutas de acceso para el tráfico de salida, como hacia Internet u otros destinos", "Los nombres de dominio de los recursos", "El cifrado de los datos"]
+			},
+			{
+				pregunta: "[VPC] ¿Con cuántas rutas predeterminadas se crea cada VPC en Google Cloud?",
+				idCorrecta: 2,
+				respuestas: ["Una sola ruta hacia Internet", "Tres rutas: regional, global y local", "Dos: la ruta predeterminada hacia Internet y rutas de subred para cada rango IP", "No se crean rutas por defecto"]
+			}
+
+        ];
+
+</script>
+
+
+<script>
+    // Función para crear un array con las preguntas reordenadas aleatoriamente
+
+    // 1. Crear array del 1 al 20
+    let numeros = Array.from({ length: preguntas_en_crudo.length }, (_, i) => i + 1);
+
+    // 2. Mezclar (Fisher-Yates shuffle)
+    for (let i = numeros.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+
+    // Se rellena el array preguntas con el orden aleatorio
+    
+    const preguntas = numeros.map((una_pregunta) => preguntas_en_crudo[una_pregunta-1]);
+    console.log(preguntas)
+
+
+</script>
+
+
+<script> // FUNCIONES
+
+        // Función para generar el HTML del cuestionario
+        function generarCuestionario() {
+            const contenedor = document.getElementById('cuestionario');
+            let html = '<form id="formCuestionario">';
+            
+            preguntas.forEach((pregunta, indexPregunta) => {
+                html += `
+                    <div class="pregunta" id="pregunta-${indexPregunta}">
+                        <h3>${indexPregunta + 1}. ${pregunta.pregunta}</h3>
+                `;
+                
+                pregunta.respuestas.forEach((respuesta, indexRespuesta) => {
+                    html += `
+                        <div class="respuesta" id="resp-${indexPregunta}-${indexRespuesta}">
+                            <input type="radio" 
+                                   name="pregunta_${indexPregunta}" 
+                                   value="${indexRespuesta}" 
+                                   id="op-${indexPregunta}-${indexRespuesta}">
+                            <label for="op-${indexPregunta}-${indexRespuesta}">${respuesta}</label>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            });
+            
+            html += '</form>';
+            contenedor.innerHTML = html;
+        }
+
+        // Función para eliminar clases de color de todas las respuestas
+        function limpiarColores() {
+            const respuestas = document.querySelectorAll('.respuesta');
+            respuestas.forEach(respuesta => {
+                respuesta.classList.remove('correcta', 'incorrecta');
+            });
+        }
+
+        // Función para verificar respuestas
+        function verificarRespuestas() {
+            limpiarColores();
+            
+            let aciertos = 0;
+            const form = document.getElementById('formCuestionario');
+            
+            preguntas.forEach((pregunta, indexPregunta) => {
+                // Obtener la respuesta seleccionada para esta pregunta
+                const radios = form.querySelectorAll(`input[name="pregunta_${indexPregunta}"]`);
+                let respuestaSeleccionada = null;
+                
+                radios.forEach(radio => {
+                    if (radio.checked) {
+                        respuestaSeleccionada = radio.value;
+                    }
+                });
+                
+                // Determinar colores y contar aciertos
+                if (respuestaSeleccionada !== null) {
+                    // Marcar la respuesta correcta
+                    const respuestaCorrectaDiv = document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`);
+                    respuestaCorrectaDiv.classList.add('correcta');
+                    
+                    // Si el usuario seleccionó una respuesta incorrecta, marcarla en rojo
+                    if (parseInt(respuestaSeleccionada) !== pregunta.idCorrecta) {
+                        const respuestaIncorrectaDiv = document.getElementById(`resp-${indexPregunta}-${respuestaSeleccionada}`);
+                        respuestaIncorrectaDiv.classList.add('incorrecta');
+                    } else {
+                        // Si acertó, incrementar contador
+                        aciertos++;
+                    }
+                } else {
+                    // Si no respondió, solo mostrar la correcta en verde
+                    const respuestaCorrectaDiv = document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`);
+                    respuestaCorrectaDiv.classList.add('correcta');
+                }
+            });
+            
+            // Mostrar resultado
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `Has acertado ${aciertos} de ${preguntas.length} preguntas.`;
+            
+            // Cambiar color del resultado según rendimiento
+            if (aciertos === preguntas.length) {
+                resultadoDiv.style.color = '#28a745';
+            } else if (aciertos >= preguntas.length / 2) {
+                resultadoDiv.style.color = '#ffc107';
+            } else {
+                resultadoDiv.style.color = '#dc3545';
+            }
+        }
+
+        // Generar el cuestionario al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            generarCuestionario();
+            
+            // Agregar evento al botón confirmar
+            document.getElementById('btnConfirmar').addEventListener('click', verificarRespuestas);
+        });
+    </script>
+</body>
+</html>

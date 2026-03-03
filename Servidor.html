@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Temas 5,6,7,8 - DWS - 58 preguntas</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f5f5f5; }
+        .pregunta { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .pregunta h3 { margin-top: 0; color: #333; }
+        .respuesta { margin: 10px 0; padding: 8px; border-radius: 4px; transition: background-color 0.3s; }
+        .respuesta label { margin-left: 8px; cursor: pointer; }
+        .correcta { background-color: #d4edda; border: 1px solid #c3e6cb; }
+        .incorrecta { background-color: #f8d7da; border: 1px solid #f5c6cb; }
+        #btnConfirmar { background-color: #007bff; color: white; border: none; padding: 12px 30px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 20px 0; display: block; }
+        #btnConfirmar:hover { background-color: #0056b3; }
+        #resultado { font-size: 18px; font-weight: bold; margin-top: 20px; padding: 15px; background-color: white; border-radius: 5px; text-align: center; }
+        .tema-label { font-size: 0.75em; color: #888; font-weight: normal; margin-left: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Test - Temas 5, 6, 7 y 8 - DWS - 58 preguntas</h1>
+    <p><span style="font-size:0.8em;color:grey;">(Recarga para generar otro test aleatorio)</span></p>
+    <div id="cuestionario"></div>
+    <button id="btnConfirmar">Confirmar respuestas</button>
+    <div id="resultado"></div>
+
+<script>
+const preguntas_en_crudo = [
+
+    // ── TEMA 5 ──────────────────────────────────────────────────────────────
+    { tema: "T5",
+      pregunta: "¿Qué objeto de ADO.NET se utiliza para almacenar temporalmente los datos recuperados de la base de datos en ASP.NET?",
+      idCorrecta: 0,
+      respuestas: ["SqlDataReader", "HttpReader", "NetReader", "XmlReader"] },
+
+    { tema: "T5",
+      pregunta: "Cuando se utiliza el modelo de acceso a datos mediante código en ASP.NET, ¿cómo se realiza el acceso a la base de datos?",
+      idCorrecta: 0,
+      respuestas: [
+        "Especificando código lógico de acceso a los datos que utiliza la librería de clase ADO.NET en los archivos de código subyacente",
+        "Utilizando controles de servidor de acceso a datos especializados denominados controles de acceso a datos",
+        "Empleando un servidor de aplicaciones especializado que necesita técnicas de encriptación para acceder a la información",
+        "El modelo de acceso a datos mediante código no precisa de la existencia de código lógico" ] },
+
+    { tema: "T5",
+      pregunta: "¿Qué método del objeto SqlDataReader de ADO.NET se utiliza para obtener el valor de la columna especificada de la fila actual?",
+      idCorrecta: 0,
+      respuestas: ["Read()", "ExecuteNonQuery()", "GetValues()", "ExecuteReader()"] },
+
+    { tema: "T5",
+      pregunta: "¿Qué método del objeto SqlCommand de ADO.NET se utiliza para modificar datos mediante sentencias INSERT, DELETE y UPDATE?",
+      idCorrecta: 1,
+      respuestas: ["GetValues()", "ExecuteNonQuery()", "ExecuteReader()", "Read()"] },
+
+    { tema: "T5",
+      pregunta: "¿Qué objeto de ADO.NET se utiliza para conectarse a una base de datos en ASP.NET?",
+      idCorrecta: 1,
+      respuestas: ["NetConnection", "SqlConnection", "XmlConnection", "HttpConnection"] },
+
+    { tema: "T5",
+      pregunta: "¿Qué método del objeto SqlDataReader de ADO.NET se utiliza para avanzar el apuntador hasta el siguiente registro?",
+      idCorrecta: 1,
+      respuestas: ["GetValues()", "Read()", "ExecuteReader()", "ExecuteNonQuery()"] },
+
+    { tema: "T5",
+      pregunta: "¿Qué objeto de ADO.NET se utiliza para definir un comando de manipulación de datos en ASP.NET?",
+      idCorrecta: 1,
+      respuestas: ["XmlCommand", "SqlCommand", "NetCommand", "HttpCommand"] },
+
+    { tema: "T5",
+      pregunta: "¿Qué método del objeto SqlCommand de ADO.NET se utiliza para recuperar datos mediante una sentencia SELECT?",
+      idCorrecta: 2,
+      respuestas: ["Read()", "GetValues()", "ExecuteReader()", "ExecuteNonQuery()"] },
+
+    { tema: "T5",
+      pregunta: "La necesidad de integrar datos de bases de datos en el servicio Web se relaciona con la posibilidad de que las aplicaciones Web puedan...",
+      idCorrecta: 3,
+      respuestas: [
+        "Aumentar las capacidades de sincronización de los datos en las transacciones",
+        "Mejorar la seguridad de los datos y reducir el ancho de banda utilizado",
+        "Reducir el coste del almacenamiento de datos y aumentar la eficiencia en el acceso",
+        "Representar funcionalidades complejas que exploten información de naturaleza cambiante y ajustarse a las necesidades de cada usuario" ] },
+
+    { tema: "T5",
+      pregunta: "¿En qué consiste el procesamiento del acceso a datos almacenados en bases de datos desde el lado del servidor Web?",
+      idCorrecta: 1,
+      respuestas: [
+        "Utilizar múltiples bases de datos independientes sincronizadas mediante múltiples servidores",
+        "Establecer la conexión con una base de datos y ejecutar el comando de acceso a datos deseado mediante una sentencia SQL",
+        "No es posible acceder a los datos almacenados en bases de datos desde el lado del servidor Web",
+        "Acceder a un servidor de base de datos desde el navegador o cliente Web" ] },
+
+    { tema: "T5",
+      pregunta: "¿Cuál es el tipo de control más habitualmente utilizado en ASP.NET Web Forms para mostrar datos en forma de tabla?",
+      idCorrecta: 1,
+      respuestas: ["TextBox", "GridView", "Label", "DropDownList"] },
+
+    { tema: "T5",
+      pregunta: "Selecciona la opción que incluye el mayor número de los aspectos transversales distribuidos por todas las capas de la arquitectura del software.",
+      idCorrecta: 3,
+      respuestas: [
+        "La comunicación, el rendimiento, la presentación visual y la seguridad",
+        "Los mecanismos de navegación, el rendimiento, la escalabilidad y la seguridad",
+        "El almacenamiento, el rendimiento, las entidades de negocio y la seguridad",
+        "La comunicación, el rendimiento, la escalabilidad y la seguridad" ] },
+
+    // ── TEMA 6 ──────────────────────────────────────────────────────────────
+    { tema: "T6",
+      pregunta: "Las clases que definen el modelo son las siguientes:",
+      idCorrecta: 3,
+      respuestas: [
+        "Las Clases de acciones del controlador y la Clase de datos.",
+        "Las Clases de vista y la Clase de controlador del contexto.",
+        "Las Clases de datos o Clases de entidades de datos.",
+        "Las Clases de datos y la Clase del contexto de datos." ] },
+
+    { tema: "T6",
+      pregunta: "La siguiente instrucción: return RedirectToAction(nameof(Index));",
+      idCorrecta: 2,
+      respuestas: [
+        "Redirecciona la ejecución a la vista denominada Index.cshtml.",
+        "Devuelve la ejecución de la vista denominada Index.cshtml.",
+        "Redirecciona la ejecución a la acción denominada Index() del mismo controlador.",
+        "Redirecciona la ejecución a la acción denominada Index() del controlador HomeController.cs." ] },
+
+    { tema: "T6",
+      pregunta: "Algunas de las ventajas o inconvenientes más importantes de las aplicaciones basadas en la arquitectura MVC son...",
+      idCorrecta: 2,
+      respuestas: [
+        "Es complicado manejar la complejidad de las aplicaciones debido a la dependencia entre la interfaz de usuario y la lógica de procesamiento.",
+        "Se evita la duplicación del código, aunque no es posible la división del proyecto de desarrollo en partes.",
+        "Se evita la duplicación del código y se posibilita la división del proyecto de desarrollo en partes, debido a la independencia entre sus componentes.",
+        "Es necesario duplicar el código, habitualmente, debido al uso de procedimientos de evento." ] },
+
+    { tema: "T6",
+      pregunta: "Por convención, los nombres de los controladores incorporan el sufijo...",
+      idCorrecta: 0,
+      respuestas: ["Controller.", "Controlator.", "No incorporan ningún sufijo en el nombre.", "aspx.cs."] },
+
+    { tema: "T6",
+      pregunta: "En una arquitectura MVC, el elemento denominado Controlador...",
+      idCorrecta: 3,
+      respuestas: [
+        "Genera la interfaz de usuario a partir de la información obtenida del modelo.",
+        "No existe elemento denominado Controlador en la arquitectura MVC.",
+        "Representa la información que maneja la aplicación.",
+        "Procesa la interacción del usuario y está constituido por una clase que incluye una serie de métodos." ] },
+
+    { tema: "T6",
+      pregunta: "Selecciona la instrucción correcta para generar un enlace que solicite la acción Edit() del controlador LibrosController.cs desde una vista.",
+      idCorrecta: 2,
+      respuestas: [
+        "&lt;a asp-controller=&quot;Libros&quot;&gt;Volver&lt;/a&gt;",
+        "&lt;a asp-controller=&quot;Home&quot; asp-action=&quot;Index&quot;&gt;Volver&lt;/a&gt;",
+        "&lt;a asp-controller=&quot;Libros&quot; asp-action=&quot;Edit&quot;&gt;Volver&lt;/a&gt;",
+        "&lt;a href=&quot;LibrosController.cs&quot; asp-action=&quot;Index&quot;&gt;Volver&lt;/a&gt;" ] },
+
+    { tema: "T6",
+      pregunta: "Las acciones o métodos de acción GET...",
+      idCorrecta: 0,
+      respuestas: [
+        "Se asocian con la obtención de información desde el servidor hacia el cliente.",
+        "Las peticiones URL nunca pueden ser GET o POST.",
+        "Se asocian con la obtención de información desde el cliente hacia el servidor.",
+        "No existen acciones que se soliciten mediante petición de tipo GET." ] },
+
+    { tema: "T6",
+      pregunta: "Una acción devuelve la ejecución de una vista sobre la que se inyecta información del modelo. ¿Cómo se establece la correspondencia entre la acción y la vista?",
+      idCorrecta: 3,
+      respuestas: [
+        "A través de la especificación establecida en el archivo de inicio Program.cs.",
+        "Mediante la especificación del nombre de la vista en el código de la acción.",
+        "Una acción de un controlador nunca devuelve la ejecución de una vista.",
+        "Mediante la coincidencia de los nombres, según una convención de nombres preestablecida." ] },
+
+    { tema: "T6",
+      pregunta: "Selecciona la instrucción correcta para generar un cuadro de texto en una vista que corresponda a la propiedad Titulo del modelo.",
+      idCorrecta: 2,
+      respuestas: [
+        "&lt;input name=&quot;Titulo&quot; class=&quot;form-control&quot; /&gt;",
+        "&lt;TextBox id=&quot;Titulo&quot; class=&quot;form-control&quot; /&gt;",
+        "&lt;input asp-for=&quot;Titulo&quot; class=&quot;form-control&quot; /&gt;",
+        "&lt;input type=&quot;text&quot; name=&quot;Titulo&quot; class=&quot;form-control&quot; /&gt;" ] },
+
+    { tema: "T6",
+      pregunta: "¿En qué se basa el patrón arquitectónico Modelo-Vista-Controlador (MVC)?",
+      idCorrecta: 1,
+      respuestas: [
+        "En unir la lógica de la aplicación con la interfaz de usuario.",
+        "En separar la lógica de la aplicación de la interfaz de usuario.",
+        "En separar el almacenamiento de datos de la aplicación de la interfaz de usuario.",
+        "En separar la lógica de la aplicación del almacenamiento de datos." ] },
+
+    { tema: "T6",
+      pregunta: "El elemento de la arquitectura MVC que representa el estado de la aplicación y proporciona los medios para consultar y actualizar dicha información es:",
+      idCorrecta: 1,
+      respuestas: ["La Capa de persistencia.", "El Modelo.", "La Vista.", "El Controlador."] },
+
+    { tema: "T6",
+      pregunta: "La siguiente instrucción: return View(libro);",
+      idCorrecta: 1,
+      respuestas: [
+        "Redirige la ejecución hacia el controlador libroController.cs desde la vista correspondiente.",
+        "Activa la vista correspondiente y le pasa la entidad denominada libro.",
+        "Solicita la ejecución del controlador correspondiente y le pasa la entidad denominada libros.",
+        "Ejecuta la vista denominada libro.cshtml." ] },
+
+    { tema: "T6",
+      pregunta: "Selecciona la línea de código correcta para que una acción solo atienda peticiones POST.",
+      idCorrecta: 0,
+      respuestas: ["[HttpPost]", "[POSTActionFilterON == True]", "[POST == true]", "[HttpGet]"] },
+
+    { tema: "T6",
+      pregunta: "La plantilla de diseño predeterminada que define el código común de todas las vistas, alojada en /Views/Shared, se especifica en el archivo denominado...",
+      idCorrecta: 1,
+      respuestas: ["Master.cshtml", "_Layout.cshtml", "_Layout.master", "Master.master.cshtml"] },
+
+    { tema: "T6",
+      pregunta: "El formato de enrutamiento o mapeo MVC...",
+      idCorrecta: 0,
+      respuestas: [
+        "Define el formato URL predeterminado que sirve para especificar el método de acción que se va a ejecutar.",
+        "Define el formato URL predeterminado que sirve para especificar la clase del modelo que se va a ejecutar.",
+        "Define el formato URL predeterminado que sirve para especificar la vista que se va a ejecutar.",
+        "Carga la página Web solicitada en el navegador sin que se produzca procesamiento en el servidor." ] },
+
+    { tema: "T6",
+      pregunta: "¿Qué nombre reciben los métodos que se incluyen en una clase que representa a un controlador?",
+      idCorrecta: 0,
+      respuestas: [
+        "Métodos de acción o acciones.",
+        "Las clases que representan a los controladores no incluyen métodos.",
+        "Métodos de propiedad o propiedades.",
+        "Procedimientos de evento o eventos." ] },
+
+    { tema: "T6",
+      pregunta: "El elemento de la arquitectura MVC que genera la interfaz de usuario en forma de página HTML a partir de la información del modelo es...",
+      idCorrecta: 0,
+      respuestas: ["La Vista.", "La Capa de presentación.", "El Modelo.", "El Controlador."] },
+
+    { tema: "T6",
+      pregunta: "Cuando se emplea una arquitectura MVC, la solicitud URL realizada desde un navegador desencadena la ejecución de...",
+      idCorrecta: 3,
+      respuestas: [
+        "un programa ejecutable en el servidor Web.",
+        "un procedimiento de evento.",
+        "una vista.",
+        "una acción de un controlador." ] },
+
+    { tema: "T6",
+      pregunta: "La arquitectura del software Modelo-Vista-Controlador (MVC)...",
+      idCorrecta: 2,
+      respuestas: [
+        "Es muy reciente. Fue ideada en 2016 y la primera implementación se realizó en 2019.",
+        "Está en fase de investigación. Fue ideada en 2016 y no existe ninguna implementación funcional.",
+        "Tiene ya bastante tiempo. Fue introducido en 1979 y la primera implementación se realizó en 1983.",
+        "Es reciente. Fue ideada en 2001 y la primera implementación se realizó en 2008." ] },
+
+    { tema: "T6",
+      pregunta: "¿Para qué sirven las operaciones de migración?",
+      idCorrecta: 1,
+      respuestas: [
+        "Las operaciones de migración no son necesarias cuando se emplea una herramienta ORM.",
+        "Permiten mantener la correspondencia entre la especificación del modelo y el esquema de la base de datos.",
+        "Permiten exportar datos a otras aplicaciones Web.",
+        "Permiten actualizar y compilar el código de la aplicación Web durante la fase de explotación." ] },
+
+    // ── TEMA 7 ──────────────────────────────────────────────────────────────
+    { tema: "T7",
+      pregunta: "Las operaciones de manipulación de datos básicas que suelen ejecutarse en las aplicaciones Web se pueden clasificar en dos grupos:",
+      idCorrecta: 3,
+      respuestas: [
+        "Operaciones de modificación y operaciones de actualización de datos.",
+        "Operaciones de controlador y operaciones de vista.",
+        "Operaciones de capa de presentación y operaciones de capa de lógica de negocio.",
+        "Operaciones para recuperar los datos y operaciones para actualizar los datos." ] },
+
+    { tema: "T7",
+      pregunta: "Selecciona la instrucción correcta para buscar y recuperar una entidad del DbSet Autores cuya clave primaria coincida con el argumento.",
+      idCorrecta: 1,
+      respuestas: [
+        "var autor = await _context.Autores(id);",
+        "var autor = await _context.Autores.FindAsync(id);",
+        "var autor = await _context.Libros.FindAsync(id);",
+        "var autor = await _context.Autores.FindAsync();" ] },
+
+    { tema: "T7",
+      pregunta: "El uso de una herramienta ORM permite...",
+      idCorrecta: 0,
+      respuestas: [
+        "Utilizar un modelo conceptual de datos de alto nivel que representa los datos de la aplicación Web mediante un conjunto de objetos.",
+        "Crear procesamientos avanzados de tipo CRUD automáticamente.",
+        "Acceder a la base de datos mediante SQL desde el código lógico.",
+        "Definir controladores que actúan sobre las vistas de la aplicación Web." ] },
+
+    { tema: "T7",
+      pregunta: "Selecciona la instrucción correcta para obtener la colección Libros incluyendo las entidades relacionadas Autor y Genero.",
+      idCorrecta: 1,
+      respuestas: [
+        "var libros = _context.Libros in Autor || Genero;",
+        "var libros = _context.Libros.Include(a => a.Autor).Include(a => a.Genero);",
+        "var libros = _context.Libros join (Autor, Genero);",
+        "var libros = _context.Libros.Include(Autor, Genero);" ] },
+
+    { tema: "T7",
+      pregunta: "¿Qué es una herramienta ORM?",
+      idCorrecta: 2,
+      respuestas: [
+        "Una herramienta que permite editar el código de los controladores en las aplicaciones MVC.",
+        "Una herramienta que permite editar el código de las vistas en las aplicaciones MVC.",
+        "Una herramienta que proporciona una capa interpuesta de software que facilita a los desarrolladores trabajar con un modelo conceptual de datos de alto nivel.",
+        "Una herramienta que permite acceder a los datos almacenados empleando sentencias SQL embebidas en el código lógico." ] },
+
+    { tema: "T7",
+      pregunta: "En las aplicaciones Web basadas en ASP.NET Core MVC, por regla general, se acepta que...",
+      idCorrecta: 0,
+      respuestas: [
+        "Las operaciones de manipulación de datos se realizan en las acciones del controlador y el enlace entre los datos y la interfaz Web se realiza en las vistas.",
+        "Las operaciones de manipulación de datos se realizan en las vistas y el enlace entre los datos y la interfaz Web se realiza en las acciones del controlador.",
+        "No es necesario realizar operaciones de manipulación de datos ni enlazar los datos con la interfaz Web.",
+        "Las operaciones de manipulación de datos se realizan en el modelo y el enlace entre los datos y la interfaz Web se realiza en las acciones del controlador." ] },
+
+    { tema: "T7",
+      pregunta: "Selecciona la instrucción correcta para obtener una lista con todas las entidades del DbSet Autores usando programación asíncrona.",
+      idCorrecta: 1,
+      respuestas: [
+        "_context.Autores.ToList()",
+        "await _context.Autores.ToListAsync()",
+        "var autor = await _context.Autores.FindAsync(id)",
+        "_context.Add(autor)" ] },
+
+    { tema: "T7",
+      pregunta: "Selecciona la instrucción correcta para guardar los cambios del modelo en la base de datos.",
+      idCorrecta: 1,
+      respuestas: [
+        "await _context.SaveAsync();",
+        "await _context.SaveChangesAsync();",
+        "_context SaveChangesAsync();",
+        "await SaveChangesAsync();" ] },
+
+    { tema: "T7",
+      pregunta: "La propiedad Model...",
+      idCorrecta: 1,
+      respuestas: [
+        "no se emplea en aplicaciones Web basadas en ASP.NET Core MVC.",
+        "facilita el acceso a los datos del modelo que se pasa a la vista para que los datos puedan ser enlazados en la interfaz Web.",
+        "facilita el acceso a los datos para que sean procesados en las acciones de un controlador.",
+        "facilita el acceso a los datos del modelo que se pasa a la acción del controlador." ] },
+
+    { tema: "T7",
+      pregunta: "Para pasar datos auxiliares desde una acción del controlador hacia la vista correspondiente se puede emplear...",
+      idCorrecta: 0,
+      respuestas: [
+        "el objeto de tipo diccionario identificador-valor ViewData.",
+        "la propiedad Model.",
+        "una o varias variables locales del controlador.",
+        "No es posible pasar datos auxiliares desde una acción de un controlador a la vista." ] },
+
+    { tema: "T7",
+      pregunta: "Las operaciones para actualizar los datos almacenados...",
+      idCorrecta: 1,
+      respuestas: [
+        "Consisten en recuperar un conjunto de filas de una tabla.",
+        "Consisten en añadir una nueva fila, modificar una fila o eliminar una fila de una tabla.",
+        "Consisten en recuperar una fila o un conjunto de filas de una tabla.",
+        "Consisten en recuperar una fila de una tabla." ] },
+
+    { tema: "T7",
+      pregunta: "La siguiente instrucción: return View(await libros.ToListAsync());",
+      idCorrecta: 2,
+      respuestas: [
+        "Solicita la ejecución del controlador correspondiente y le pasa la lista de entidades libros.",
+        "Redirige la ejecución hacia el controlador denominado libros desde la vista correspondiente.",
+        "Activa la vista correspondiente y le pasa la lista de entidades denominada libros.",
+        "Ejecuta la vista denominada libros." ] },
+
+    { tema: "T7",
+      pregunta: "Selecciona la instrucción correcta para obtener las entidades del DbSet Libros pertenecientes al género de 'Terror'.",
+      idCorrecta: 1,
+      respuestas: [
+        'var librosTerror = _context.Libros.Where(x => x.Genero.Descripcion == "Terror");',
+        'var libros = _context.Libros.Where(x => x.Genero.Descripcion == "Terror");',
+        'var libros = select Libros where Genero.Descripcion == "Terror";',
+        'var libros = _context.Libros.Where(Genero == "Terror");' ] },
+
+    { tema: "T7",
+      pregunta: "El objeto de acceso dinámico ViewBag...",
+      idCorrecta: 0,
+      respuestas: [
+        "permite pasar datos auxiliares desde una acción del controlador hacia la vista correspondiente.",
+        "permite ejecutar una vista sin necesidad de pasarle datos.",
+        "permite abandonar la ejecución de una acción del controlador.",
+        "no se emplea en aplicaciones Web basadas en ASP.NET Core MVC." ] },
+
+    { tema: "T7",
+      pregunta: "Las operaciones de manipulación de datos que se aplican sobre una tabla suelen agruparse en un procesamiento típico denominado...",
+      idCorrecta: 1,
+      respuestas: [
+        "Lógica de negocio.",
+        "CRUD (Create, Read, Update and Delete).",
+        "Arquitectura de tres capas.",
+        "Controlador." ] },
+
+    { tema: "T7",
+      pregunta: "Selecciona la instrucción correcta para generar un formulario en una vista que envíe los datos del usuario a la acción Edit() del mismo controlador.",
+      idCorrecta: 3,
+      respuestas: [
+        "&lt;form action=&quot;Edit()&quot;&gt;",
+        "No se pueden enviar datos introducidos por el usuario para procesar.",
+        "&lt;form action=&quot;Edit()&quot; method=&quot;post&quot;&gt;",
+        "&lt;form asp-action=&quot;Edit&quot;&gt;" ] },
+
+    // ── TEMA 8 ──────────────────────────────────────────────────────────────
+    { tema: "T8",
+      pregunta: "¿Qué es la Arquitectura Orientada a los Servicios o Service Oriented Architecture (SOA)?",
+      idCorrecta: 0,
+      respuestas: [
+        "Es un modelo de arquitectura del software distribuida que propone una forma de implementar y utilizar servicios a través de una red de computadores.",
+        "Es un modelo de arquitectura del software no distribuida o centralizada.",
+        "Es un modelo de arquitectura MVC en la que la capa de presentación se sustituye por un conjunto de servicios.",
+        "Es un modelo de arquitectura de tres capas en la que la capa de presentación se sustituye por la capa de servicios." ] },
+
+    { tema: "T8",
+      pregunta: "¿En qué consiste consumir un servicio?",
+      idCorrecta: 3,
+      respuestas: [
+        "Es la acción de comprar un servicio a un proveedor para poder acceder a las funcionalidades que proporciona.",
+        "Es la acción de desarrollar un servicio para proporcionar funcionalidades externas a las aplicaciones cliente.",
+        "Es la acción de publicar o implementar un servicio en un servidor para ponerlo a disposición de las aplicaciones cliente.",
+        "Es la acción de utilizar un servicio desde una aplicación cliente para poder obtener la información solicitada." ] },
+
+    { tema: "T8",
+      pregunta: "¿Qué protocolo de transporte suelen emplear los Servicios Web a través de internet?",
+      idCorrecta: 2,
+      respuestas: ["JSON.", "XML.", "HTTP.", "UDDI."] },
+
+    { tema: "T8",
+      pregunta: "¿Cuáles son los métodos HTTP (verbos) que se utilizan para acceder a la información que ofrece un Servicio Web REST?",
+      idCorrecta: 2,
+      respuestas: [
+        "GET, PULL, PUSH y DELETE.",
+        "SET, POST, PUT y ERASE.",
+        "GET, POST, PUT y DELETE.",
+        "SET, PULL, PUSH y ERASE." ] },
+
+    { tema: "T8",
+      pregunta: "Una aplicación informática basada en la Arquitectura Orientada a los Servicios (SOA) es...",
+      idCorrecta: 0,
+      respuestas: [
+        "una aplicación cliente o de usuario sencilla que integra funcionalidades externas proporcionadas por un conjunto de servicios implementados por la misma o por otras organizaciones.",
+        "La Arquitectura Orientada a los Servicios no es una concepción de arquitectura del software.",
+        "una aplicación constituida por tres capas: presentación, lógica de negocio y persistencia.",
+        "una aplicación constituida por tres elementos: el modelo, la vista y el controlador." ] },
+
+    { tema: "T8",
+      pregunta: "Los denominados Servicios Web REST suelen utilizar...",
+      idCorrecta: 3,
+      respuestas: [
+        "El protocolo de mensajería SOAP basado en XML para definir el formato de los mensajes.",
+        "El formato XML para representar la información en los mensajes.",
+        "El protocolo de mensajería WSDL para definir el formato de los mensajes.",
+        "El formato JSON (JavaScript Object Notation) para representar la información en los mensajes." ] },
+
+    { tema: "T8",
+      pregunta: "¿Qué nombre recibe una aplicación de software autocontenida identificada mediante una URI que puede ser consumida por otras aplicaciones Web a través de Internet?",
+      idCorrecta: 2,
+      respuestas: [
+        "Servicio distribuido.",
+        "Aplicación cliente o de usuario.",
+        "Servicio Web.",
+        "Servicio." ] },
+
+    { tema: "T8",
+      pregunta: "¿Cómo se denomina una aplicación de software que solicita la ejecución de una operación de un Servicio Web enviando los parámetros necesarios?",
+      idCorrecta: 3,
+      respuestas: [
+        "Servicio Web.",
+        "Servicio.",
+        "Servicio distribuido.",
+        "Aplicación cliente o de usuario." ] },
+
+    { tema: "T8",
+      pregunta: "Los denominados Servicios Web SOAP suelen utilizar...",
+      idCorrecta: 0,
+      respuestas: [
+        "El protocolo de mensajería SOAP (Simple Object Access Protocol), basado en XML, para definir el formato de los mensajes.",
+        "El formato JSON (JavaScript Object Notation) para representar la información en los mensajes.",
+        "El formato XML para representar la información en los mensajes.",
+        "El protocolo de mensajería WSDL para definir el formato de los mensajes." ] },
+
+    { tema: "T8",
+      pregunta: "¿Para qué sirven los servicios en el ámbito de una arquitectura Orientada a los Servicios?",
+      idCorrecta: 3,
+      respuestas: [
+        "Una arquitectura Orientada a los Servicios no emplea servicios en su implementación.",
+        "Facilitan que una aplicación pueda incorporar el código lógico necesario para expresar las funcionalidades requeridas por los usuarios.",
+        "Facilitan las tareas necesarias para implementar los elementos de hardware y software de las tecnologías de información en una empresa.",
+        "Facilitan que las aplicaciones puedan comunicarse entre sí, a través del intercambio de información mediante el paso de mensajes en una red de computadores." ] }
+
+];
+</script>
+
+<script>
+    let numeros = Array.from({ length: preguntas_en_crudo.length }, (_, i) => i + 1);
+    for (let i = numeros.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+    const preguntas = numeros.map((p) => preguntas_en_crudo[p - 1]);
+</script>
+
+<script>
+    function generarCuestionario() {
+        const contenedor = document.getElementById('cuestionario');
+        let html = '<form id="formCuestionario">';
+        preguntas.forEach((pregunta, indexPregunta) => {
+            html += `<div class="pregunta" id="pregunta-${indexPregunta}">
+                <h3>${indexPregunta + 1}. ${pregunta.pregunta} <span class="tema-label">[${pregunta.tema}]</span></h3>`;
+            pregunta.respuestas.forEach((respuesta, indexRespuesta) => {
+                html += `<div class="respuesta" id="resp-${indexPregunta}-${indexRespuesta}">
+                    <input type="radio" name="pregunta_${indexPregunta}" value="${indexRespuesta}" id="op-${indexPregunta}-${indexRespuesta}">
+                    <label for="op-${indexPregunta}-${indexRespuesta}">${respuesta}</label>
+                </div>`;
+            });
+            html += '</div>';
+        });
+        html += '</form>';
+        contenedor.innerHTML = html;
+    }
+
+    function limpiarColores() {
+        document.querySelectorAll('.respuesta').forEach(r => r.classList.remove('correcta', 'incorrecta'));
+    }
+
+    function verificarRespuestas() {
+        limpiarColores();
+        let aciertos = 0;
+        const form = document.getElementById('formCuestionario');
+        preguntas.forEach((pregunta, indexPregunta) => {
+            const radios = form.querySelectorAll(`input[name="pregunta_${indexPregunta}"]`);
+            let respuestaSeleccionada = null;
+            radios.forEach(radio => { if (radio.checked) respuestaSeleccionada = radio.value; });
+            document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`).classList.add('correcta');
+            if (respuestaSeleccionada !== null) {
+                if (parseInt(respuestaSeleccionada) !== pregunta.idCorrecta) {
+                    document.getElementById(`resp-${indexPregunta}-${respuestaSeleccionada}`).classList.add('incorrecta');
+                } else { aciertos++; }
+            }
+        });
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = `Has acertado ${aciertos} de ${preguntas.length} preguntas.`;
+        resultadoDiv.style.color = aciertos === preguntas.length ? '#28a745' : aciertos >= preguntas.length / 2 ? '#ffc107' : '#dc3545';
+        resultadoDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        generarCuestionario();
+        document.getElementById('btnConfirmar').addEventListener('click', verificarRespuestas);
+    });
+</script>
+</body>
+</html>

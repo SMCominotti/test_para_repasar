@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - 2º Evaluación - Sostenibilidad - 30 preguntas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .pregunta {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .pregunta h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .respuesta {
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .respuesta label {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        .correcta {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrecta {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        .acierto-texto {
+            font-weight: bold;
+        }
+        #btnConfirmar, #btnTestNuevo {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+            display: block;
+        }
+        #btnConfirmar:hover {
+            background-color: #0056b3;
+        }
+        #resultado {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!-- <script src="./test.js"></script> -->
+    <h1>Test - 2º Evaluación - Sostenibilidad - 30 preguntas</h1>
+
+    <p><span style="font-size:0.8em;color:grey;">(Recarga para generar otro test aleatorio)</p>
+        
+    <div id="cuestionario"></div>
+    
+    <button id="btnConfirmar">Confirmar respuestas</button>
+	
+    <div id="resultado"></div>
+
+<script> // PREGUNTAS Y RESPUESTAS
+
+// Array de objetos con 30 preguntas y respuestas para rellenar
+
+// Test - 2º Evaluación - Sostenibilidad - 30 preguntas
+
+const preguntas_en_crudo = [
+            { // PREGUNTA 1
+                pregunta: "¿Qué significa sostenibilidad según la ONU?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Mantener el crecimiento económico sin límites.", "Satisfacer necesidades presentes sin comprometer las futuras.", "Reducir únicamente el impacto ambiental.", "Garantizar el beneficio empresarial."]
+            },
+            {
+                pregunta: "¿Cuál de estas NO es una dimensión del desarrollo sostenible?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Económica.","Social.","Tecnológica.","Medioambiental."]
+            },
+            {
+                pregunta: "¿Qué son los ODS?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Un conjunto de leyes europeas sobre sostenibilidad.","17 objetivos globales para 2030 con metas sociales, económicas y ambientales.","Un sistema de certificación para empresas sostenibles.","Un plan de reciclaje obligatorio."]
+            },
+            {
+                pregunta: "¿Qué es un stakeholder?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Un proveedor de materias primas.","Un grupo cuyos intereses se ven afectados por la empresa.","Un cliente habitual.","Un organismo público regulador."]
+            },
+            { // PREGUNTA 5
+                pregunta: "¿Qué es un indicador de desempeño?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Un documento legal obligatorio.","Un dato que mide el rendimiento respecto a un objetivo.","Un informe financiero anual.","Un registro de ventas."]
+            },
+            {
+                pregunta: "¿Qué condición debe cumplirse para que un ecosistema esté en equilibrio?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Que todas las especies tengan el mismo tamaño.","Que las relaciones entre especies permitan su desarrollo y evolución.","Que no existan depredadores.","Que no haya intervención humana."]
+            },
+            {
+                pregunta: "¿Qué es la huella ecológica?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["La cantidad de residuos que genera un país.","El ritmo al que los ecosistemas producen recursos.","El ritmo al que consumimos recursos y generamos residuos.","El nivel de biodiversidad de un territorio."]
+            },
+            {
+                pregunta: "¿Qué busca el ODS 8?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Reducir desigualdades.","Garantizar agua limpia.","Trabajo decente y crecimiento económico.","Energía asequible."]
+            },
+            {
+                pregunta: "¿Qué caracteriza a un plan de sostenibilidad empresarial?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Se centra solo en el impacto ambiental.","Incluye diagnóstico, objetivos, indicadores y seguimiento.","Es un documento voluntario sin estructura definida.","Solo lo elaboran empresas grandes."]
+            },
+            { // PREGUNTA 10
+                pregunta: "¿Qué es el análisis de materialidad?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Un estudio de los materiales usados en producción.","Un proceso para priorizar temas relevantes para la empresa y sus grupos de interés.","Un análisis financiero de costes.","Un informe obligatorio para todas las pymes."]
+            },
+            {
+                pregunta: "¿Qué dimensión de la sostenibilidad se relaciona con la equidad y el bienestar?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Económica.","Social.","Ambiental.","Tecnológica."]
+            },
+            {
+                pregunta: "¿Qué ventaja tiene integrar los aspectos ASG en una empresa?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Aumenta el consumo energético.","Reduce la transparencia.","Mejora la imagen de marca y atrae talento.","Elimina la necesidad de cumplir leyes."]
+            },
+            {
+                pregunta: "¿Qué ODS está relacionado con la producción y consumo responsables?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["ODS 11.","ODS 12.","ODS 14.","ODS 16."]
+            },
+            {
+                pregunta: "¿Qué paso forma parte del análisis de stakeholders?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Elaborar un informe financiero.","Clasificar y situar a los grupos de interés en una matriz.","Diseñar campañas publicitarias.","Establecer salarios."]
+            },
+            { // PREGUNTA 15
+                pregunta: "¿Qué caracteriza a un indicador de desempeño?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Es subjetivo y no se puede medir.","Mide el rendimiento respecto a un objetivo concreto.","Solo se usa en empresas industriales.","Se calcula una vez cada diez años."]
+            },
+            {
+                pregunta: "¿Qué busca el ODS 6?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Reducir desigualdades.","Garantizar agua limpia y saneamiento.","Fomentar la innovación industrial.","Proteger la vida submarina."]
+            },
+            {
+                pregunta: "¿Qué elemento forma parte del compromiso de la Dirección?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Reducir salarios.","Establecer prioridades y roles claros.","Eliminar auditorías internas.","Aumentar la producción sin límites."]
+            },
+            {
+                pregunta: "¿Qué significa biocapacidad?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Capacidad de un país para producir alimentos.","Capacidad de los ecosistemas para regenerar recursos y absorber residuos.","Cantidad de energía renovable disponible.","Nivel de biodiversidad de un territorio."]
+            },
+            {
+                pregunta: "¿Qué ODS está relacionado con la igualdad de género?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["ODS 3.","ODS 5.","ODS 9.","ODS 14."]
+            },
+            { // PREGUNTA 20
+                pregunta: "¿Qué se hace en el diagnóstico inicial?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Se redacta el informe final.","Se recopila y analiza información relevante.","Se asignan responsables.","Se diseñan campañas de marketing."]
+            },
+            {
+                pregunta: "¿Qué caracteriza al ODS 13?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Busca mejorar la educación.","Se centra en la acción por el clima.","Promueve la vida submarina.","Garantiza energía asequible."]
+            },
+            {
+                pregunta: "¿Qué es un riesgo ASG?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Un beneficio económico inesperado.","Una circunstancia ambiental, social o de gobernanza que puede afectar negativamente a la empresa.","Un indicador financiero.","Un tipo de auditoría externa."]
+            },
+            {
+                pregunta: "¿Qué se hace en el análisis de stakeholders?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Se priorizan los grupos de interés.","Se calculan emisiones de CO₂.","Se redactan políticas internas.","Se evalúan proveedores."]
+            },
+            {
+                pregunta: "¿Qué busca el ODS 12?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Promover la paz.","Garantizar ciudades sostenibles.","Impulsar producción y consumo responsables.","Reducir la pobreza extrema."]
+            },
+            { // PREGUNTA 25
+                pregunta: "¿Qué es la Agenda 2030?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Un acuerdo europeo sobre comercio.","Un plan global con 17 objetivos de desarrollo sostenible.","Un documento de la OMS sobre salud pública.","Un tratado internacional sobre energía."]
+            },
+            {
+                pregunta: "¿Qué tipo de indicador mide emisiones de GEI?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Económico.","Gobernanza.","Cambio climático.","Laboral."]
+            },
+            {
+                pregunta: "¿Qué se busca con el ODS 9?",
+                idCorrecta: 0, // Índice de la respuesta correcta
+                respuestas: ["Mejorar la infraestructura y fomentar la innovación.","Reducir el hambre.","Proteger los ecosistemas terrestres.","Garantizar educación de calidad."]
+            },
+            {
+                pregunta: "¿Qué implica la comunicación del plan de sostenibilidad?",
+                idCorrecta: 2, // Índice de la respuesta correcta
+                respuestas: ["Usar lenguaje técnico y complejo.","Ocultar información sensible.","Utilizar un lenguaje claro y canales adecuados.","Comunicar solo a los directivos."]
+            },
+            {
+                pregunta: "¿Qué es un sistema de gestión ambiental?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Un conjunto de normas de recursos humanos.","El área que implementa la política ambiental de la empresa.","Un documento financiero anual.","Un sistema de control de ventas."]
+            },
+            { // PREGUNTA 30
+                pregunta: "¿Qué busca el ODS 17?",
+                idCorrecta: 1, // Índice de la respuesta correcta
+                respuestas: ["Proteger la biodiversidad.","Fomentar alianzas para lograr los objetivos.","Garantizar energía limpia.","Reducir la desigualdad salarial."]
+            }
+			
+        ];
+
+</script>
+
+
+<script>
+    // Función para crear un array con las preguntas reordenadas aleatoriamente
+
+    // 1. Crear array del 1 al 20
+    let numeros = Array.from({ length: preguntas_en_crudo.length }, (_, i) => i + 1);
+
+    // 2. Mezclar (Fisher-Yates shuffle)
+    for (let i = numeros.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+
+    // Se rellena el array preguntas con el orden aleatorio
+    
+    const preguntas = numeros.map((una_pregunta) => preguntas_en_crudo[una_pregunta-1]);
+    console.log(preguntas)
+
+
+</script>
+
+
+<script> // FUNCIONES
+
+        // Función para generar el HTML del cuestionario
+        function generarCuestionario() {
+            const contenedor = document.getElementById('cuestionario');
+            let html = '<form id="formCuestionario">';
+            
+            preguntas.forEach((pregunta, indexPregunta) => {
+                html += `
+                    <div class="pregunta" id="pregunta-${indexPregunta}">
+                        <h3>${indexPregunta + 1}. ${pregunta.pregunta}</h3>
+                `;
+                
+                pregunta.respuestas.forEach((respuesta, indexRespuesta) => {
+                    html += `
+                        <div class="respuesta" id="resp-${indexPregunta}-${indexRespuesta}">
+                            <input type="radio" 
+                                   name="pregunta_${indexPregunta}" 
+                                   value="${indexRespuesta}" 
+                                   id="op-${indexPregunta}-${indexRespuesta}">
+                            <label for="op-${indexPregunta}-${indexRespuesta}">${respuesta}</label>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            });
+            
+            html += '</form>';
+            contenedor.innerHTML = html;
+        }
+
+        // Función para eliminar clases de color de todas las respuestas
+        function limpiarColores() {
+            const respuestas = document.querySelectorAll('.respuesta');
+            respuestas.forEach(respuesta => {
+                respuesta.classList.remove('correcta', 'incorrecta');
+            });
+        }
+
+        // Función para verificar respuestas
+        function verificarRespuestas() {
+            limpiarColores();
+            
+            let aciertos = 0;
+            const form = document.getElementById('formCuestionario');
+            
+            preguntas.forEach((pregunta, indexPregunta) => {
+                // Obtener la respuesta seleccionada para esta pregunta
+                const radios = form.querySelectorAll(`input[name="pregunta_${indexPregunta}"]`);
+                let respuestaSeleccionada = null;
+                
+                radios.forEach(radio => {
+                    if (radio.checked) {
+                        respuestaSeleccionada = radio.value;
+                    }
+                });
+                
+                // Determinar colores y contar aciertos
+                if (respuestaSeleccionada !== null) {
+                    // Marcar la respuesta correcta
+                    const respuestaCorrectaDiv = document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`);
+                    respuestaCorrectaDiv.classList.add('correcta');
+                    
+                    // Si el usuario seleccionó una respuesta incorrecta, marcarla en rojo
+                    if (parseInt(respuestaSeleccionada) !== pregunta.idCorrecta) {
+                        const respuestaIncorrectaDiv = document.getElementById(`resp-${indexPregunta}-${respuestaSeleccionada}`);
+                        respuestaIncorrectaDiv.classList.add('incorrecta');
+                    } else {
+                        // Si acertó, incrementar contador
+                        aciertos++;
+                    }
+                } else {
+                    // Si no respondió, solo mostrar la correcta en verde
+                    const respuestaCorrectaDiv = document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`);
+                    respuestaCorrectaDiv.classList.add('correcta');
+                }
+            });
+            
+            // Mostrar resultado
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `Has acertado ${aciertos} de ${preguntas.length} preguntas.`;
+            
+            // Cambiar color del resultado según rendimiento
+            if (aciertos === preguntas.length) {
+                resultadoDiv.style.color = '#28a745';
+            } else if (aciertos >= preguntas.length / 2) {
+                resultadoDiv.style.color = '#ffc107';
+            } else {
+                resultadoDiv.style.color = '#dc3545';
+            }
+        }
+
+        // Generar el cuestionario al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            generarCuestionario();
+            
+            // Agregar evento al botón confirmar
+            document.getElementById('btnConfirmar').addEventListener('click', verificarRespuestas);
+        });
+    </script>
+</body>
+</html>
