@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Despliegue de Aplicaciones Web - HTTP y Arquitecturas</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f5f5f5; }
+        .pregunta { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .pregunta h3 { margin-top: 0; color: #333; }
+        .respuesta { margin: 10px 0; padding: 8px; border-radius: 4px; transition: background-color 0.3s; }
+        .respuesta label { margin-left: 8px; cursor: pointer; }
+        .correcta { background-color: #d4edda; border: 1px solid #c3e6cb; }
+        .incorrecta { background-color: #f8d7da; border: 1px solid #f5c6cb; }
+        #btnConfirmar { background-color: #007bff; color: white; border: none; padding: 12px 30px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 20px 0; display: block; }
+        #btnConfirmar:hover { background-color: #0056b3; }
+        #resultado { font-size: 18px; font-weight: bold; margin-top: 20px; padding: 15px; background-color: white; border-radius: 5px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Test - Despliegue de Aplicaciones Web - HTTP y Arquitecturas</h1>
+    <p><span style="font-size:0.8em;color:grey;">(Recarga para generar otro test aleatorio)</span></p>
+    <div id="cuestionario"></div>
+    <button id="btnConfirmar">Confirmar respuestas</button>
+    <div id="resultado"></div>
+
+<script>
+const preguntas_en_crudo = [
+
+    // ── EXAMEN 2022/2023 ─────────────────────────────────────────────────────
+    {
+        pregunta: "Un proxy directo: ¿hacia quién realiza la solicitud el cliente?",
+        idCorrecta: 2,
+        respuestas: [
+            "La solicitud es realizada por el cliente hacia el servidor web.",
+            "La solicitud es realizada por el cliente hacia el propio cliente web.",
+            "La solicitud es realizada por el cliente hacia el proxy directo.",
+            "La solicitud es realizada por el cliente hacia el proxy intermedio."
+        ]
+    },
+    {
+        pregunta: "El protocolo HTTP consiste en:",
+        idCorrecta: 2,
+        respuestas: [
+            "Conjunto de normas y reglas en base a las cuales dialogan clientes, servidores web y proxies. Usa el protocolo TTP como protocolo de transporte.",
+            "Conjunto de normas y reglas en base a las cuales dialogan clientes, servidores web y proxies. Usa el protocolo UDP como protocolo de transporte.",
+            "Conjunto de normas y reglas en base a las cuales dialogan clientes, servidores web y proxies. Usa el protocolo TCP como protocolo de transporte (en versiones anteriores a HTTP/3).",
+            "Conjunto de normas y reglas en base a las cuales dialogan clientes, servidores web y proxies. Usa el protocolo FTP como protocolo de transporte de archivos."
+        ]
+    },
+    {
+        pregunta: "Un proxy inverso: ¿hacia quién realiza la solicitud el cliente?",
+        idCorrecta: 3,
+        respuestas: [
+            "La solicitud es realizada por el cliente hacia el servidor web.",
+            "La solicitud es realizada por el cliente hacia el propio cliente web.",
+            "La solicitud es realizada por el cliente hacia el servidor web, pero el proxy lo redirige a otro.",
+            "La solicitud es realizada por el cliente hacia el proxy, que la traslada a uno o varios servidores web."
+        ]
+    },
+    {
+        pregunta: "Los servidores web también llamados servidores HTTP son:",
+        idCorrecta: 2,
+        respuestas: [
+            "Programas que atienden envíos TTP, procesan e interpretan los diferentes archivos recibidos y envían a los clientes los recursos solicitados.",
+            "Programas que atienden peticiones TCP, procesan e interpretan el código escrito en los diferentes lenguajes de programación y envían a los clientes los recursos solicitados.",
+            "Programas que atienden peticiones HTTP, procesan e interpretan el código escrito en los diferentes lenguajes de programación y envían a los clientes los recursos solicitados.",
+            "Programas que atienden peticiones UDP, procesan e interpretan el código escrito en los diferentes lenguajes de programación y envían a los clientes los recursos solicitados."
+        ]
+    },
+    {
+        pregunta: "El proxy ejerce:",
+        idCorrecta: 0,
+        respuestas: [
+            "Además de punto central por el que pasa todo el tráfico web, se puede configurar con cortafuegos filtrando el tráfico no deseado, controlando los accesos por usuarios y priorizando contenidos.",
+            "Además de punto central por el que pasa todo el tráfico web, se puede configurar servidor FTP y servidor HTTP priorizando contenidos.",
+            "Además de punto central por el que pasa todo el tráfico web, se puede configurar servidor FTP y servidor HTTP controlando los accesos por usuarios y priorizando los contenidos.",
+            "Además de punto central por el que pasa todo el tráfico web, se puede configurar servidor FTP y servidor HTTP controlando el tráfico no deseado."
+        ]
+    },
+    {
+        pregunta: "Respecto al protocolo HTTP, los servidores web por defecto:",
+        idCorrecta: 1,
+        respuestas: [
+            "Escuchan peticiones TCP de la capa de aplicación en el puerto 443 para establecer una conexión de transporte de HTTP.",
+            "Escuchan peticiones HTTP de la capa de aplicación en el puerto 80 para establecer una conexión de transporte de TCP.",
+            "Escuchan peticiones UDP de la capa de aplicación en el puerto 80 para establecer una conexión de transporte de HTTP.",
+            "Escuchan peticiones TCP de la capa de aplicación en el puerto 443 para establecer una conexión de transporte de UDP."
+        ]
+    },
+    {
+        pregunta: "Los clientes web o navegadores son:",
+        idCorrecta: 0,
+        respuestas: [
+            "Programas que permiten al usuario acceder a recursos disponibles en la red introduciendo URLs, siendo su función principal la de ejercer de clientes HTTP.",
+            "Programas que permiten al usuario acceder a recursos disponibles en la red introduciendo URLs, siendo su función principal la de ejercer de servidores HTTP.",
+            "Programas que permiten al servidor Web ofrecer recursos introduciendo URLs, siendo su función principal la de ejercer de servidores HTTP.",
+            "Programas que permiten al servidor Web ofrecer recursos creando sitios web, siendo su función principal la de ejercer de servidores HTTP."
+        ]
+    },
+    {
+        pregunta: "En el ámbito de las redes, el término proxy hace referencia a:",
+        idCorrecta: 2,
+        respuestas: [
+            "Programa que ejerce de intermediario al ofrecer la creación de sitios FTP.",
+            "Programa que ejerce de intermediario al ofrecer la creación de sitios Web.",
+            "Programa que ejerce de intermediario entre otros.",
+            "Programa que ejerce de intermediario al ofrecer la creación de sitios FTP y sitios Web."
+        ]
+    },
+    {
+        pregunta: "En los mensajes de petición de HTTP, el método utilizado para la petición puede ser (en el contexto de envío de información a través de formularios HTML):",
+        idCorrecta: 0,
+        respuestas: [
+            "GET o POST",
+            "HTTP usuario o HTTP anónimo",
+            "GET, POST, HTTP anónimo, HTTP invitado, HTTP usuario",
+            "Anónimo, invitado y usuario."
+        ]
+    },
+    {
+        pregunta: "Los servidores envían las cookies y pueden incluir los siguientes detalles:",
+        idCorrecta: 0,
+        respuestas: [
+            "Nombre de la cookie, contenido o valor, fecha de expiración, dominio del que proviene la cookie.",
+            "Nombre de la cookie, contenido o valor, fecha de creación, dominio del que proviene la cookie.",
+            "Nombre de la cookie, contenido o valor, fecha de creación, dominio en el que se va a almacenar la cookie.",
+            "Nombre de la cookie, contenido o valor, fecha de expiración, dominio en el que se va a almacenar la cookie."
+        ]
+    },
+    {
+        pregunta: "Las partes que forman una URL (en orden de aparición) son:",
+        idCorrecta: 0,
+        respuestas: [
+            "Esquema o protocolo, dominio en el que se encuentra alojado el recurso, ruta del recurso y, si es necesario, parámetros y valor enviados al servidor.",
+            "Dominio en el que se encuentra el recurso, esquema o protocolo, ruta del recurso y, si es necesario, parámetros y valor enviados al servidor.",
+            "Ruta del recurso, dominio, esquema o protocolo y, si es necesario, parámetros y valor enviados al servidor.",
+            "FTP + dirección IP del servidor + selección del fichero o recurso."
+        ]
+    },
+    {
+        pregunta: "Respecto al protocolo HTTPS, el uso de TLS proporciona:",
+        idCorrecta: 1,
+        respuestas: [
+            "Peticiones TCP de la capa de aplicación en el puerto 80 para establecer una conexión de transporte de HTTP.",
+            "Propiedades de seguridad como son: autenticación, confidencialidad e integridad.",
+            "Propiedades de navegación a nivel de capa de seguridad del modelo TCP/IP como son: autenticación, confidencialidad e integridad.",
+            "Peticiones UDP de la capa de aplicación en el puerto 80 para establecer una conexión de transporte de HTTP."
+        ]
+    },
+    {
+        pregunta: "HTTP es un protocolo:",
+        idCorrecta: 0,
+        respuestas: [
+            "Sin estado de la capa de aplicación para sistemas de información de hipertexto distribuidos y colaborativos.",
+            "Con estado de la capa de aplicación para sistemas de información de hipertexto distribuidos y colaborativos.",
+            "Sin estado de la capa de transporte para sistemas de información de hipertexto distribuidos y colaborativos.",
+            "Con estado de la capa de transporte para sistemas de información de hipertexto distribuidos y colaborativos."
+        ]
+    },
+
+    // ── EXAMEN 2025/2026 ─────────────────────────────────────────────────────
+    {
+        pregunta: "En una aplicación web basada en la arquitectura Cliente–Servidor, la comunicación se realiza normalmente mediante:",
+        idCorrecta: 2,
+        respuestas: [
+            "FTP",
+            "TCP puro sin capa de aplicación",
+            "HTTP/HTTPS",
+            "SSH"
+        ]
+    },
+    {
+        pregunta: "¿Cuál es una característica principal de una arquitectura monolítica?",
+        idCorrecta: 1,
+        respuestas: [
+            "Servicios desplegados independientemente",
+            "Una sola base de código y un único despliegue",
+            "Comunicación mediante event bus",
+            "Pago por uso"
+        ]
+    },
+    {
+        pregunta: "¿Qué arquitectura permite desplegar servicios pequeños e independientes que se comunican mediante APIs?",
+        idCorrecta: 2,
+        respuestas: [
+            "Monolítica",
+            "Cliente–Servidor",
+            "Microservicios",
+            "SPA"
+        ]
+    },
+    {
+        pregunta: "¿Cuál de las siguientes es una ventaja de Serverless / FaaS?",
+        idCorrecta: 1,
+        respuestas: [
+            "Mayor control del hardware",
+            "Pago por uso y escalado automático",
+            "Menor dependencia de la nube",
+            "Una sola base de código"
+        ]
+    },
+    {
+        pregunta: "¿Qué arquitectura es más adecuada para un sistema con alta necesidad de escalabilidad y tolerancia a fallos?",
+        idCorrecta: 1,
+        respuestas: [
+            "Monolítica",
+            "Microservicios",
+            "Cliente–Servidor simple",
+            "Aplicación legacy"
+        ]
+    },
+    {
+        pregunta: "¿En qué protocolos de la capa de transporte se basa HTTP (considerando todas sus versiones)?",
+        idCorrecta: 0,
+        respuestas: [
+            "UDP y TCP",
+            "IP y TCP",
+            "FTP y DNS",
+            "ARP y DHCP"
+        ]
+    },
+    {
+        pregunta: "HTTP/3 utiliza como base el protocolo:",
+        idCorrecta: 2,
+        respuestas: [
+            "TCP",
+            "TLS",
+            "UDP mediante QUIC",
+            "FTP"
+        ]
+    },
+    {
+        pregunta: "¿Cuál es el puerto TCP por defecto para HTTP?",
+        idCorrecta: 2,
+        respuestas: [
+            "21",
+            "25",
+            "80",
+            "443"
+        ]
+    },
+    {
+        pregunta: "¿Qué método HTTP se utiliza principalmente para enviar datos de formularios al servidor?",
+        idCorrecta: 1,
+        respuestas: [
+            "GET",
+            "POST",
+            "TRACE",
+            "OPTIONS"
+        ]
+    },
+    {
+        pregunta: "¿Qué método HTTP se utiliza para solicitar información sobre un recurso o incluso el propio recurso?",
+        idCorrecta: 0,
+        respuestas: [
+            "GET",
+            "POST",
+            "HEAD",
+            "PUT"
+        ]
+    },
+    {
+        pregunta: "Respecto al protocolo QUIC se tiene que:",
+        idCorrecta: 1,
+        respuestas: [
+            "Asigna conexiones encriptadas por defecto en la capa de transporte, es decir, la capa de aplicación siempre estará encriptada.",
+            "Asigna conexiones encriptadas por defecto en la capa de aplicación, es decir, la capa de aplicación siempre estará encriptada.",
+            "Asigna conexiones encriptadas por defecto en la capa de red, es decir, la capa de aplicación siempre estará encriptada.",
+            "Asigna conexiones encriptadas por defecto en la capa de enlace, es decir, la capa de aplicación siempre estará encriptada."
+        ]
+    },
+    {
+        pregunta: "La versión HTTP/3 funciona con el protocolo de la capa de transporte:",
+        idCorrecta: 3,
+        respuestas: [
+            "TCP",
+            "FTP",
+            "HTTP",
+            "UDP"
+        ]
+    },
+    {
+        pregunta: "La variante cifrada de HTTP es:",
+        idCorrecta: 2,
+        respuestas: [
+            "TLS",
+            "SSL",
+            "HTTPS",
+            "FTP"
+        ]
+    },
+    {
+        pregunta: "Respecto al funcionamiento del protocolo HTTP se tiene que:",
+        idCorrecta: 0,
+        respuestas: [
+            "El cliente Web descodifica la URL, separando sus diferentes partes: el protocolo de acceso, la dirección DNS o IP del servidor, el posible puerto opcional y el objeto requerido del servidor.",
+            "El servidor Web descodifica la URL, separando sus diferentes partes: el protocolo de acceso, la dirección DNS o IP del servidor, el posible puerto opcional y el objeto requerido del servidor.",
+            "El cliente Web descodifica la URL, separando sus diferentes partes: el protocolo de acceso, la dirección DNS o IP del cliente, el posible puerto opcional y el objeto requerido del servidor.",
+            "El servidor Web descodifica la URL, separando sus diferentes partes: el protocolo de acceso, la dirección DNS o IP del cliente, el posible puerto opcional y el objeto requerido del servidor."
+        ]
+    },
+    {
+        pregunta: "En la arquitectura SPA (Single Page Application) se tiene que:",
+        idCorrecta: 0,
+        respuestas: [
+            "La interfaz se carga una sola vez y luego se actualiza dinámicamente.",
+            "La interfaz se carga tantas veces como peticiones realice el servidor.",
+            "La interfaz se carga dos veces, una para el cliente y otra para el servidor.",
+            "La interfaz se carga una sola vez y luego no se actualiza nuevamente."
+        ]
+    }
+];
+</script>
+
+<script>
+    let numeros = Array.from({ length: preguntas_en_crudo.length }, (_, i) => i + 1);
+    for (let i = numeros.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+    const preguntas = numeros.map((p) => preguntas_en_crudo[p - 1]);
+</script>
+
+<script>
+    function generarCuestionario() {
+        const contenedor = document.getElementById('cuestionario');
+        let html = '<form id="formCuestionario">';
+        preguntas.forEach((pregunta, indexPregunta) => {
+            html += `<div class="pregunta" id="pregunta-${indexPregunta}"><h3>${indexPregunta + 1}. ${pregunta.pregunta}</h3>`;
+            pregunta.respuestas.forEach((respuesta, indexRespuesta) => {
+                html += `<div class="respuesta" id="resp-${indexPregunta}-${indexRespuesta}">
+                    <input type="radio" name="pregunta_${indexPregunta}" value="${indexRespuesta}" id="op-${indexPregunta}-${indexRespuesta}">
+                    <label for="op-${indexPregunta}-${indexRespuesta}">${respuesta}</label>
+                </div>`;
+            });
+            html += '</div>';
+        });
+        html += '</form>';
+        contenedor.innerHTML = html;
+    }
+    function limpiarColores() {
+        document.querySelectorAll('.respuesta').forEach(r => r.classList.remove('correcta', 'incorrecta'));
+    }
+    function verificarRespuestas() {
+        limpiarColores();
+        let aciertos = 0;
+        const form = document.getElementById('formCuestionario');
+        preguntas.forEach((pregunta, indexPregunta) => {
+            const radios = form.querySelectorAll(`input[name="pregunta_${indexPregunta}"]`);
+            let respuestaSeleccionada = null;
+            radios.forEach(radio => { if (radio.checked) respuestaSeleccionada = radio.value; });
+            document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`).classList.add('correcta');
+            if (respuestaSeleccionada !== null) {
+                if (parseInt(respuestaSeleccionada) !== pregunta.idCorrecta) {
+                    document.getElementById(`resp-${indexPregunta}-${respuestaSeleccionada}`).classList.add('incorrecta');
+                } else { aciertos++; }
+            }
+        });
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = `Has acertado ${aciertos} de ${preguntas.length} preguntas.`;
+        resultadoDiv.style.color = aciertos === preguntas.length ? '#28a745' : aciertos >= preguntas.length / 2 ? '#ffc107' : '#dc3545';
+        resultadoDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        generarCuestionario();
+        document.getElementById('btnConfirmar').addEventListener('click', verificarRespuestas);
+    });
+</script>
+</body>
+</html>
