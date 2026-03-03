@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - IPE II - 40 preguntas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .pregunta {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .pregunta h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .respuesta {
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .respuesta label {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        .correcta {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrecta {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        .acierto-texto {
+            font-weight: bold;
+        }
+        #btnConfirmar, #btnTestNuevo {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+            display: block;
+        }
+        #btnConfirmar:hover {
+            background-color: #0056b3;
+        }
+        #resultado {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Test - IPE II - 40 preguntas</h1>
+    <p><span style="font-size:0.8em;color:grey;">(Recarga para generar otro test aleatorio)</span></p>
+
+    <div id="cuestionario"></div>
+
+    <button id="btnConfirmar">Confirmar respuestas</button>
+
+    <div id="resultado"></div>
+
+<script> // PREGUNTAS Y RESPUESTAS
+
+const preguntas_en_crudo = [
+
+    // ── UD 4: LA IDEA DE NEGOCIO ──────────────────────────────────────────
+
+    { // 1
+        pregunta: "¿Cuál es la principal diferencia entre creatividad e innovación?",
+        idCorrecta: 2,
+        respuestas: [
+            "Son sinónimos; ambos términos significan lo mismo.",
+            "La innovación es un proceso mental y la creatividad es productivo.",
+            "La creatividad genera ideas nuevas; la innovación las convierte en algo tangible con valor real.",
+            "La creatividad requiere inversión económica y la innovación no."
+        ]
+    },
+    { // 2
+        pregunta: "La técnica SCAMPER es útil especialmente para…",
+        idCorrecta: 1,
+        respuestas: [
+            "Lanzar ideas completamente nuevas sin partir de nada existente.",
+            "Mejorar o reinventar un producto o sistema que ya existe.",
+            "Calcular la viabilidad económica de una startup.",
+            "Analizar a los competidores del mercado."
+        ]
+    },
+    { // 3
+        pregunta: "En la técnica de los Seis Sombreros para Pensar de De Bono, ¿qué representa el sombrero negro?",
+        idCorrecta: 0,
+        respuestas: [
+            "Evaluar riesgos, debilidades y aspectos negativos de una idea.",
+            "Expresar emociones e intuiciones sin justificación lógica.",
+            "Buscar beneficios y aspectos positivos.",
+            "Organizar y dirigir el proceso de pensamiento."
+        ]
+    },
+    { // 4
+        pregunta: "¿Qué es el análisis DAFO?",
+        idCorrecta: 3,
+        respuestas: [
+            "Una técnica de brainstorming para generar ideas.",
+            "Un documento legal obligatorio al crear una empresa.",
+            "Un modelo de negocio digital.",
+            "Una herramienta de diagnóstico que analiza factores internos (Debilidades/Fortalezas) y externos (Amenazas/Oportunidades)."
+        ]
+    },
+    { // 5
+        pregunta: "En el análisis CAME, la 'C' significa…",
+        idCorrecta: 1,
+        respuestas: [
+            "Crear nuevas oportunidades.",
+            "Corregir las debilidades detectadas en el DAFO.",
+            "Controlar los riesgos del entorno.",
+            "Capturar el valor del cliente."
+        ]
+    },
+    { // 6
+        pregunta: "¿Qué es un wireframe en el proceso de prototipado?",
+        idCorrecta: 0,
+        respuestas: [
+            "Un boceto básico que muestra la estructura y distribución de una pantalla sin colores ni estilos.",
+            "Una versión funcional final de la aplicación lista para publicar.",
+            "Un diseño visual completo con colores, tipografías e imágenes.",
+            "Una historia gráfica que muestra las emociones del usuario."
+        ]
+    },
+    { // 7
+        pregunta: "¿Cuál es el objetivo principal del Producto Mínimo Viable (MVP)?",
+        idCorrecta: 2,
+        respuestas: [
+            "Crear el producto con todas sus funcionalidades antes de lanzarlo.",
+            "Presentar el proyecto a inversores para obtener financiación.",
+            "Resolver un problema específico con las funciones esenciales, obtener feedback real y aprender.",
+            "Registrar la marca y la propiedad intelectual."
+        ]
+    },
+    { // 8
+        pregunta: "En el Lienzo de Propuesta de Valor, los 'Pain Relievers' son…",
+        idCorrecta: 1,
+        respuestas: [
+            "Las tareas que el cliente necesita realizar.",
+            "Las formas en que tu producto alivia las frustraciones del cliente.",
+            "Los beneficios positivos que el cliente desea obtener.",
+            "Los canales a través de los que llegas al cliente."
+        ]
+    },
+    { // 9
+        pregunta: "¿Qué tipo de innovación se produjo cuando McDonald's aplicó el concepto de línea de producción a los restaurantes?",
+        idCorrecta: 3,
+        respuestas: [
+            "Innovación de producto.",
+            "Innovación de marketing.",
+            "Innovación total.",
+            "Innovación de proceso."
+        ]
+    },
+    { // 10
+        pregunta: "La estrategia de diferenciación que consiste en enfocarse en un segmento muy concreto del mercado se denomina…",
+        idCorrecta: 2,
+        respuestas: [
+            "Calidad superior.",
+            "Precio competitivo.",
+            "Especialización en un nicho.",
+            "Servicio al cliente excepcional."
+        ]
+    },
+
+    // ── UD 5: EL MODELO DE NEGOCIO ────────────────────────────────────────
+
+    { // 11
+        pregunta: "¿Qué caracteriza a los modelos de negocio digitales frente a los tradicionales?",
+        idCorrecta: 1,
+        respuestas: [
+            "La tecnología actúa como soporte de un proceso físico principal.",
+            "La operación y generación de valor existe exclusivamente a través de una plataforma o software.",
+            "Requieren siempre tiendas físicas para llegar al cliente.",
+            "Solo pueden monetizarse mediante publicidad."
+        ]
+    },
+    { // 12
+        pregunta: "En el modelo Freemium, ¿cómo se genera el ingreso?",
+        idCorrecta: 0,
+        respuestas: [
+            "Ofreciendo un servicio básico gratuito y cobrando por funcionalidades avanzadas en la versión Premium.",
+            "Vendiendo espacios publicitarios dentro de la plataforma.",
+            "Cobrando una comisión por cada transacción entre usuarios.",
+            "Vendiendo una licencia de uso único del software."
+        ]
+    },
+    { // 13
+        pregunta: "¿Qué es el Business Model Canvas (Lienzo del Modelo de Negocio)?",
+        idCorrecta: 2,
+        respuestas: [
+            "Un contrato legal entre los socios fundadores de una empresa.",
+            "Un informe financiero obligatorio para startups.",
+            "Una herramienta visual de 9 bloques que representa cómo una empresa crea, entrega y captura valor.",
+            "Un plan de marketing detallado para el primer año."
+        ]
+    },
+    { // 14
+        pregunta: "¿Cuál es el porcentaje de comisión que suelen cobrar Google Play o App Store en sus marketplaces?",
+        idCorrecta: 3,
+        respuestas: [
+            "Entre el 1% y el 5%.",
+            "Entre el 5% y el 10%.",
+            "Entre el 10% y el 15%.",
+            "Entre el 15% y el 30%."
+        ]
+    },
+    { // 15
+        pregunta: "Las Empresas de Base Tecnológica (EBT) se caracterizan principalmente por…",
+        idCorrecta: 0,
+        respuestas: [
+            "Fundamentar su actividad en el uso intensivo del conocimiento científico y la tecnología (I+D) para crear productos con alto potencial de crecimiento.",
+            "Vender exclusivamente productos físicos a través de tiendas online.",
+            "Estar financiadas siempre por capital público.",
+            "No necesitar protección de propiedad intelectual."
+        ]
+    },
+    { // 16
+        pregunta: "¿Qué añade el Sustainable Canvas (Modelo Canvas Sostenible) respecto al Canvas tradicional?",
+        idCorrecta: 1,
+        respuestas: [
+            "Un bloque adicional para calcular el punto muerto.",
+            "Módulos que incorporan el impacto social y ambiental, como costes socioambientales y beneficios socioambientales.",
+            "Un apartado específico para el plan de tesorería mensual.",
+            "La integración de las redes sociales como canal de distribución."
+        ]
+    },
+    { // 17
+        pregunta: "El marketing mix se amplió de las 4P a las 8P. ¿Cuál de estos elementos es una de las 4P adicionales?",
+        idCorrecta: 2,
+        respuestas: [
+            "Plataforma.",
+            "Precio.",
+            "Personas.",
+            "Producto."
+        ]
+    },
+    { // 18
+        pregunta: "¿Cuál es el objetivo principal del Mapa de Experiencia del Cliente (CJM)?",
+        idCorrecta: 3,
+        respuestas: [
+            "Calcular el coste de adquisición de cada cliente.",
+            "Definir el precio óptimo del producto.",
+            "Organizar el backlog de desarrollo en sprints.",
+            "Empatizar con el usuario, anticipar problemas e identificar puntos de dolor (pain points) en su recorrido."
+        ]
+    },
+    { // 19
+        pregunta: "¿Qué son los ODS y quién los impulsó?",
+        idCorrecta: 0,
+        respuestas: [
+            "17 objetivos globales para 2030 impulsados por las Naciones Unidas en 2015 como parte de la Agenda 2030.",
+            "12 directivas económicas de la Unión Europea para la digitalización.",
+            "Un conjunto de normas ISO sobre calidad empresarial.",
+            "Los objetivos anuales del G20 para el crecimiento económico."
+        ]
+    },
+    { // 20
+        pregunta: "En la estrategia de Inbound Marketing, ¿cuál es su característica principal?",
+        idCorrecta: 1,
+        respuestas: [
+            "Comprar y segmentar anuncios en múltiples sitios web en tiempo real.",
+            "Atraer clientes de forma no intrusiva proporcionando contenido de valor que resuelve sus problemas.",
+            "Enviar mensajes dirigidos a la base de datos de clientes.",
+            "Unificar la experiencia del cliente en todos los canales de contacto."
+        ]
+    },
+
+    // ── UD 6: VIABILIDAD DEL PROYECTO ─────────────────────────────────────
+
+    { // 21
+        pregunta: "¿Cuál es la principal diferencia entre una inversión y un gasto?",
+        idCorrecta: 2,
+        respuestas: [
+            "Las inversiones se pagan al contado y los gastos a crédito.",
+            "Los gastos duran más de un año y las inversiones se consumen de inmediato.",
+            "Las inversiones son bienes con vida útil superior a un año; los gastos se consumen en el momento o de forma recurrente.",
+            "No hay diferencia; ambos términos son sinónimos en contabilidad."
+        ]
+    },
+    { // 22
+        pregunta: "¿Qué es la amortización?",
+        idCorrecta: 0,
+        respuestas: [
+            "El gasto contable anual que refleja la pérdida de valor de un activo fijo por uso u obsolescencia.",
+            "El pago mensual de las cuotas de un préstamo bancario.",
+            "El proceso de devolución del capital social a los socios.",
+            "Un ingreso extraordinario procedente de la venta de activos."
+        ]
+    },
+    { // 23
+        pregunta: "Si compras un ordenador por 1.500 € con una vida útil de 5 años, ¿cuál es la cuota anual de amortización lineal?",
+        idCorrecta: 1,
+        respuestas: [
+            "150 €",
+            "300 €",
+            "500 €",
+            "750 €"
+        ]
+    },
+    { // 24
+        pregunta: "¿Qué criterio se usa en la Cuenta de Resultados para registrar ingresos y gastos?",
+        idCorrecta: 3,
+        respuestas: [
+            "Criterio de caja: se registra cuando se cobra o se paga.",
+            "Criterio FIFO: primero en entrar, primero en salir.",
+            "Criterio de prudencia: solo se registran las pérdidas.",
+            "Criterio del devengo: se registra cuando se produce la transacción, independientemente del cobro o pago."
+        ]
+    },
+    { // 25
+        pregunta: "¿Qué mide el Plan de Tesorería?",
+        idCorrecta: 0,
+        respuestas: [
+            "La liquidez de la empresa: si hay dinero en efectivo para hacer frente a los pagos.",
+            "La rentabilidad anual del negocio.",
+            "El valor del patrimonio de la empresa en un día concreto.",
+            "El porcentaje de mercado que ocupa la empresa."
+        ]
+    },
+    { // 26
+        pregunta: "¿Qué fórmula se usa para calcular el Punto Muerto (Umbral de Rentabilidad)?",
+        idCorrecta: 2,
+        respuestas: [
+            "Ingresos Totales ÷ Costes Variables.",
+            "Precio de Venta × Unidades Vendidas.",
+            "Costes Fijos Totales ÷ Margen de Contribución Unitario.",
+            "Beneficio Neto ÷ Ventas Totales."
+        ]
+    },
+    { // 27
+        pregunta: "En la financiación propia, los Business Angels/Venture Capital…",
+        idCorrecta: 1,
+        respuestas: [
+            "Prestan dinero sin adquirir participación en la empresa.",
+            "Son inversores individuales o fondos que aportan capital y know-how a cambio de una parte de la empresa.",
+            "Son subvenciones públicas a fondo perdido.",
+            "Son préstamos participativos del Estado."
+        ]
+    },
+    { // 28
+        pregunta: "¿Cuál es la diferencia entre un préstamo y una línea de crédito?",
+        idCorrecta: 3,
+        respuestas: [
+            "El préstamo no genera intereses y la línea de crédito sí.",
+            "La línea de crédito se usa para inversiones a largo plazo y el préstamo para gastos corrientes.",
+            "Ambos instrumentos son idénticos; solo cambia el nombre.",
+            "En el préstamo se entrega el capital íntegro al inicio; en la línea de crédito solo se dispone del dinero según necesidad y se pagan intereses solo por lo usado."
+        ]
+    },
+    { // 29
+        pregunta: "El Renting, como forma de financiación de activos, se caracteriza por…",
+        idCorrecta: 0,
+        respuestas: [
+            "Ser un alquiler puro sin opción a compra, con cuota mensual que incluye mantenimiento y seguro.",
+            "Permitir la adquisición del bien al final del contrato por un valor residual.",
+            "Ser un préstamo a largo plazo con garantía hipotecaria.",
+            "Solo estar disponible para grandes empresas cotizadas en bolsa."
+        ]
+    },
+    { // 30
+        pregunta: "¿Qué es el Balance de Situación de una empresa?",
+        idCorrecta: 2,
+        respuestas: [
+            "Un informe mensual de entradas y salidas de dinero.",
+            "El documento que recoge únicamente los beneficios o pérdidas del ejercicio.",
+            "Un estado que refleja la situación del patrimonio (activo, pasivo y neto) en un día concreto.",
+            "Una previsión de ingresos y gastos para el próximo año."
+        ]
+    },
+
+    // ── UD 7: PUESTA EN MARCHA ────────────────────────────────────────────
+
+    { // 31
+        pregunta: "¿Qué forma jurídica tiene responsabilidad ILIMITADA para el titular?",
+        idCorrecta: 0,
+        respuestas: [
+            "Empresario Individual (Autónomo).",
+            "Sociedad Limitada (SL).",
+            "Sociedad Anónima (SA).",
+            "Cooperativa de Trabajo Asociado."
+        ]
+    },
+    { // 32
+        pregunta: "Desde la Ley 'Crea y Crece' de 2022, ¿cuál es el capital social mínimo para constituir una Sociedad Limitada?",
+        idCorrecta: 1,
+        respuestas: [
+            "3.000 €, sin ninguna condición especial.",
+            "1 €, aunque con restricciones hasta alcanzar los 3.000 € (reserva legal obligatoria del 20% del beneficio neto).",
+            "60.000 €, igual que la Sociedad Anónima.",
+            "No se exige capital mínimo de ningún tipo."
+        ]
+    },
+    { // 33
+        pregunta: "¿Cuál es la fiscalidad aplicable a un Empresario Individual (Autónomo)?",
+        idCorrecta: 3,
+        respuestas: [
+            "Impuesto de Sociedades al tipo general del 25%.",
+            "Impuesto de Sociedades reducido al 15%.",
+            "IVA exclusivamente.",
+            "IRPF (Impuesto sobre la Renta de las Personas Físicas)."
+        ]
+    },
+    { // 34
+        pregunta: "Una característica clave de la Cooperativa de Trabajo Asociado es…",
+        idCorrecta: 2,
+        respuestas: [
+            "La responsabilidad de los socios es ilimitada y solidaria.",
+            "El capital mínimo es de 60.000 €.",
+            "Los socios son a la vez propietarios y trabajadores, con un voto por socio independientemente del capital aportado.",
+            "Solo puede constituirse con un socio."
+        ]
+    },
+    { // 35
+        pregunta: "¿Qué es el IVA y quién lo ingresa en Hacienda?",
+        idCorrecta: 0,
+        respuestas: [
+            "Es un impuesto indirecto sobre el consumo; lo ingresa el sujeto pasivo (empresario/profesional) trimestralmente mediante el modelo 303.",
+            "Es un impuesto directo sobre los beneficios; lo pagan directamente los consumidores.",
+            "Es un tributo que grava el patrimonio de las personas jurídicas.",
+            "Lo ingresa en Hacienda directamente el consumidor final."
+        ]
+    },
+    { // 36
+        pregunta: "¿Cuál es el tipo general del IVA en España?",
+        idCorrecta: 1,
+        respuestas: [
+            "4%",
+            "21%",
+            "10%",
+            "15%"
+        ]
+    },
+    { // 37
+        pregunta: "El Impuesto de Sociedades es 'proporcional' porque…",
+        idCorrecta: 3,
+        respuestas: [
+            "Aumenta progresivamente según el beneficio obtenido, igual que el IRPF.",
+            "Solo se paga el primer año de actividad de la empresa.",
+            "Lo pagan de forma solidaria todos los socios.",
+            "Su tipo impositivo es siempre el mismo (25% general) independientemente del tamaño de los beneficios."
+        ]
+    },
+    { // 38
+        pregunta: "¿Qué es el software protegido por una licencia GPL (General Public License)?",
+        idCorrecta: 2,
+        respuestas: [
+            "Un software de uso exclusivamente personal, no comercial.",
+            "Una licencia permisiva que permite usar el código en proyectos privativos sin restricciones.",
+            "Una licencia 'viral': si distribuyes un proyecto con código GPL, debes publicar el código fuente de todo el proyecto bajo la misma licencia.",
+            "Un registro de marca obligatorio para cualquier aplicación comercial."
+        ]
+    },
+    { // 39
+        pregunta: "¿Qué documento obliga a especificar qué datos personales se recogen, para qué se usan, dónde se almacenan y cuánto tiempo se conservan?",
+        idCorrecta: 0,
+        respuestas: [
+            "El Registro de Actividades de Tratamiento (RAT), obligatorio según el RGPD/GDPR.",
+            "El Libro de Inventarios y Cuentas Anuales.",
+            "El Documento Único Electrónico (DUE).",
+            "El Libro de Registro de Socios."
+        ]
+    },
+    { // 40
+        pregunta: "¿A través de qué plataforma se tramita de forma simplificada y telemática la constitución de una Sociedad Limitada en España?",
+        idCorrecta: 1,
+        respuestas: [
+            "La Sede Electrónica de la AEAT exclusivamente.",
+            "La Red CIRCE (Centro de Información y Red de Creación de Empresas) y un PAE, generando el Documento Único Electrónico (DUE).",
+            "El portal del Ministerio de Trabajo.",
+            "El Registro Mercantil Central de forma presencial obligatoria."
+        ]
+    }
+
+];
+
+</script>
+
+
+<script>
+    let numeros = Array.from({ length: preguntas_en_crudo.length }, (_, i) => i + 1);
+
+    for (let i = numeros.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+    }
+
+    const preguntas = numeros.map((una_pregunta) => preguntas_en_crudo[una_pregunta - 1]);
+    console.log(preguntas);
+</script>
+
+
+<script> // FUNCIONES
+
+    function generarCuestionario() {
+        const contenedor = document.getElementById('cuestionario');
+        let html = '<form id="formCuestionario">';
+
+        preguntas.forEach((pregunta, indexPregunta) => {
+            html += `
+                <div class="pregunta" id="pregunta-${indexPregunta}">
+                    <h3>${indexPregunta + 1}. ${pregunta.pregunta}</h3>
+            `;
+
+            pregunta.respuestas.forEach((respuesta, indexRespuesta) => {
+                html += `
+                    <div class="respuesta" id="resp-${indexPregunta}-${indexRespuesta}">
+                        <input type="radio"
+                               name="pregunta_${indexPregunta}"
+                               value="${indexRespuesta}"
+                               id="op-${indexPregunta}-${indexRespuesta}">
+                        <label for="op-${indexPregunta}-${indexRespuesta}">${respuesta}</label>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+        });
+
+        html += '</form>';
+        contenedor.innerHTML = html;
+    }
+
+    function limpiarColores() {
+        const respuestas = document.querySelectorAll('.respuesta');
+        respuestas.forEach(respuesta => {
+            respuesta.classList.remove('correcta', 'incorrecta');
+        });
+    }
+
+    function verificarRespuestas() {
+        limpiarColores();
+
+        let aciertos = 0;
+        const form = document.getElementById('formCuestionario');
+
+        preguntas.forEach((pregunta, indexPregunta) => {
+            const radios = form.querySelectorAll(`input[name="pregunta_${indexPregunta}"]`);
+            let respuestaSeleccionada = null;
+
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    respuestaSeleccionada = radio.value;
+                }
+            });
+
+            if (respuestaSeleccionada !== null) {
+                const respuestaCorrectaDiv = document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`);
+                respuestaCorrectaDiv.classList.add('correcta');
+
+                if (parseInt(respuestaSeleccionada) !== pregunta.idCorrecta) {
+                    const respuestaIncorrectaDiv = document.getElementById(`resp-${indexPregunta}-${respuestaSeleccionada}`);
+                    respuestaIncorrectaDiv.classList.add('incorrecta');
+                } else {
+                    aciertos++;
+                }
+            } else {
+                const respuestaCorrectaDiv = document.getElementById(`resp-${indexPregunta}-${pregunta.idCorrecta}`);
+                respuestaCorrectaDiv.classList.add('correcta');
+            }
+        });
+
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = `Has acertado ${aciertos} de ${preguntas.length} preguntas.`;
+
+        if (aciertos === preguntas.length) {
+            resultadoDiv.style.color = '#28a745';
+        } else if (aciertos >= preguntas.length / 2) {
+            resultadoDiv.style.color = '#ffc107';
+        } else {
+            resultadoDiv.style.color = '#dc3545';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        generarCuestionario();
+        document.getElementById('btnConfirmar').addEventListener('click', verificarRespuestas);
+    });
+</script>
+</body>
+</html>
